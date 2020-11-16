@@ -12,13 +12,16 @@ function Noticia ({ post }) {
   if (router.isFallback) {
     return <div>Loading...</div>
   }
+
+  const { ...detalle } = post
+  const {0: item} = detalle.items
   
   return (
     <MainLayout>
       <>
       Ruta: {slug}
       <code>
-        {JSON.stringify(post)}
+        {parse(item['post-body'])}
       </code>
       </>
     </MainLayout>
