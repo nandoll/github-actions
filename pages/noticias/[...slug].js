@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { MainLayout } from '../../components/ui/layout/MainLayout';
 import parse from 'html-react-parser'
@@ -7,18 +7,23 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
-  const {count, items, limit, offset, total} = post
-  const {0: item} = items
+  const [state, setState] = useState({})
+  
   
   useEffect(() => {
-    slug && ''
-  }, [slug])
+    if(post){
+      const {0: items } = post.items
+      setState(items)
+    }
+  }, [post])
+
+  const { name, 'post-body':RichText } = state
   
   return (
     <MainLayout>
       <h1>Noticias Detalle :  { slug } - {_id}</h1>
       {
-        parse(item['post-body'])
+        RichText
       }
     </MainLayout>
   )
