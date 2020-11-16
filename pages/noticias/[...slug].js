@@ -23,7 +23,7 @@ function Noticia ({ post }) {
         
       </>
       {
-        !router.isFallback && parse(post.items[0]['post-body'])
+        !router.isFallback && JSON.stringify(post.items)
       }
     </MainLayout>
   )
