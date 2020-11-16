@@ -7,11 +7,9 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
-  const { color, 'post-body':richText } = post.items[0]
+  const ite = post
+  console.log(ite)
   
-  
-  console.log()
-
   useEffect(() => {
     slug && ''
   }, [slug])
@@ -19,7 +17,7 @@ function Noticia ({ post }) {
   return (
     <MainLayout>
       <h1>Noticias Detalle :  { slug } - {_id}</h1>
-      { parse(richText) }
+      {/* { parse(richText) } */}
     </MainLayout>
   )
 }
