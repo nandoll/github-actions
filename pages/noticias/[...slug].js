@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/router'
 import { MainLayout } from '../../components/ui/layout/MainLayout';
 import parse from 'html-react-parser'
@@ -7,16 +8,19 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
-
-  useEffect(() => {
-    
-  }, [post])
-  const name = post.items[0].name
+  
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+  
   return (
     <MainLayout>
-      {
-        name
-      }
+      <>
+      Ruta: {slug}
+      <code>
+        {JSON.stringify(post)}
+      </code>
+      </>
     </MainLayout>
   )
 }
