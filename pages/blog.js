@@ -23,6 +23,7 @@ export async function getStaticProps() {
   const res = await fetch("https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee")
   const posts = await res.json()
   
+
   return {
     props: {
       posts,
