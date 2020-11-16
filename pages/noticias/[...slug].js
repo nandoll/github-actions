@@ -7,23 +7,15 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
-  const [state, setState] = useState({})
-  
-  
-  useEffect(() => {
-    if(post){
-      const {0: items } = post.items
-      setState(items)
-    }
-  }, [post])
 
-  const { name, 'post-body':RichText } = state
-  
+  useEffect(() => {
+    
+  }, [post])
+  const name = post.items[0].name
   return (
     <MainLayout>
-      <h1>Noticias Detalle :  { slug } - {_id}</h1>
       {
-        RichText
+        name
       }
     </MainLayout>
   )
