@@ -25,7 +25,7 @@ export const PostCard = ( { post, cats} ) => {
           <Link href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} >              
             <a className="title-font text-lg font-medium text-gray-900 mb-3" style={{cursor:"pointer"}}>{ name }</a>
           </Link>
-          <p className="leading-relaxed mb-3">{ extracto }</p>
+          {/* <p className="leading-relaxed mb-3">{ extracto }</p> */}
           <div className="flex items-center flex-wrap ">
             
             <h2 className="uppercase tracking-widest text-xs title-font font-medium text-gray-500 mb-1">{ handleNameCategory( categoria )}</h2>
