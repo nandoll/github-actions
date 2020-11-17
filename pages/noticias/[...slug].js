@@ -12,19 +12,33 @@ function Noticia ({ post }) {
     return <div>Loading...</div>
   }
 
+  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = post.items[0]
   
   
 
   return (
     <MainLayout>
       <section className="text-gray-700 body-font">
-        <div className="container px-5 py-24 mx-auto" style={{border: "1px solid black"}} >
-          <div className="lg:full mx-auto flex flex-wrap" style={{border: "1px solid purple"}}>
-            <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0" style={{border: "1px solid brown"}}>
+        <div className="container px-5 py-24 mx-auto" >
+          <div className="lg:full mx-auto flex flex-wrap" >
+            <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0" >
               Lateral
             </div>
-            <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" style={{border: "1px solid green"}}>
-              {post.items[0].name}
+            <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" >
+              <h1>Categoria</h1>
+              {categoria}
+
+              <h1>Titulo:</h1>
+              {name}
+
+              <h1>Fecha:</h1>
+              {creacion}
+              
+              <h1>Imagen:</h1>
+              <img src={ruta.url} alt=""/>
+              <h1>Cuerpo:</h1>
+              { cuerpo != null && parse(cuerpo) }
+              
             </div>
           </div>          
         </div>
