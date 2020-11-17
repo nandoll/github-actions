@@ -1,11 +1,16 @@
 import React from 'react'
 import { PostCard } from '../components/ui/card/PostCard'
 import { MainLayout } from '../components/ui/layout/MainLayout'
+import { CategoriesLeftSidebar } from '../components/ui/sidebar/CategoriesLeftSidebar'
 
 
-function Noticias({ posts }){
+function Noticias({ posts, cats }){
   
   const { items:noticias, count, total, limit } = posts
+  const { items:categorias } = cats
+  
+  
+  
 
   const handleChangeArticle = (e) => {
     e.preventDefault();
@@ -33,40 +38,13 @@ function Noticias({ posts }){
               </form>   
 
               <h1>Categorias</h1>   
-              <div className="md:flex md:items-left">
-                <div className="md:w-1/6  md:text-right">                  
-                  <input className="mr-2" name="chkCategoria" type="checkbox" id="inline-full-A"/>  
-                </div>
-                <div className="md:w-5/6">
-                  <label className="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" htmlFor="inline-full-A">
-                    Todos
-                  </label>
-                </div>                
-              </div>
-              <div className="md:flex md:items-left">
-                <div className="md:w-1/6  md:text-right">                  
-                  <input className="mr-2" name="chkCategoria" type="checkbox" id="inline-full-B"/>  
-                </div>
-                <div className="md:w-5/6">
-                  <label className="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" htmlFor="inline-full-B">
-                    Acciones
-                  </label>
-                </div>                
-              </div>
-              <div className="md:flex md:items-left">
-                <div className="md:w-1/6  md:text-right">                  
-                  <input className="mr-2" name="chkCategoria" type="checkbox" id="inline-full-C"/>  
-                </div>
-                <div className="md:w-5/6">
-                  <label className="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" htmlFor="inline-full-C">
-                    Aprendizaje
-                  </label>
-                </div>                
-              </div>
-              
-              
-              
-
+              {
+                categorias.map( cat => (
+                  <CategoriesLeftSidebar
+                    key={ cat._id }
+                    cat={ cat }/>
+                ))
+              }                                                      
             </div>
             {/* Panel Cards */}
             <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4">
@@ -77,10 +55,13 @@ function Noticias({ posts }){
               </div>
               <div className="flex flex-wrap -m-4">            
                 {
+                
                 noticias.map( post => (
                   <PostCard
                     key={ post._id }
-                    post={ post }/>
+                    post={ post }
+                    cats = { categorias }
+                    />
                 ))
                 }
               </div>
@@ -94,13 +75,17 @@ function Noticias({ posts }){
 
 export async function getStaticProps() {  
   
-  const res = await fetch("https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=10&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee")
+  const res = await fetch("https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee")
   const posts = await res.json()
   
-
+  const resCat = await fetch("https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee")
+  const cats = await resCat.json()
+  
   return {
     props: {
       posts,
+      cats
+      
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
