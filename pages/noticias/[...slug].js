@@ -12,7 +12,9 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter();
   //ojo: slug[0:categoria - 1:slug - 2:id]
-  // const { [0]:categoria } = router.query.slug
+  // const { [0]:categoria } = router.query
+
+  // console.log(categoria)
 
   if(router.isFallback){
     return <div>Loading...</div>
@@ -58,7 +60,7 @@ function Noticia ({ post }) {
 // This also gets called at build time
 export async function getStaticProps({ params }) {
   // params contains the post `id`.  
-  const [,,id] = params.slug  
+  const [,id] = params.slug  
   
   
   // If the route is like /posts/1, then params.id is 1

@@ -22,7 +22,7 @@ export const PostCard = ( { post, cats} ) => {
         <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={image.url} alt="blog"/>
         <div className="p-6">
           <h2 className="uppercase tracking-widest text-xs title-font font-medium text-gray-500 mb-1">{ formatDistanceFromNow( new Date(creacion), {locale:es})}</h2>
-          <Link href={`/noticias/${handleNameCategory( categoria )}/${encodeURIComponent(_id)}`} as={`/noticias/${handleNameCategory( categoria )}/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} >              
+          <Link href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} >              
             <a className="title-font text-lg font-medium text-gray-900 mb-3" style={{cursor:"pointer"}}>{ name }</a>
           </Link>
           <p className="leading-relaxed mb-3">{ extracto }</p>
