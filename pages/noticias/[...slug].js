@@ -9,22 +9,9 @@ function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
   
-  
-  if (router.isFallback) {
-    console.log('fallback activo: ' + post)
-    return <div>Loading...</div>
-  }
-  
-  console.log(router)
   return (
     <MainLayout>
-      <>
-      Ruta: {slug}
-        
-      </>
-      {
-        !router.isFallback && JSON.stringify(post.items)
-      }
+     {slug}
     </MainLayout>
   )
 }

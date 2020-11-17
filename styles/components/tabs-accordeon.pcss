@@ -1,0 +1,95 @@
+/*Code for Tab Menu*/
+.wpb-tabs-menu {
+  @apply clear-both m-0 p-0;
+  margin-bottom: -1px;
+
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  li {
+    @apply float-left mr-3;
+    line-height: 30px;
+
+    a {
+      @apply block relative p-3 uppercase text-white bg-white border-white border-r border-l border-b;
+
+      &.wpb-current {
+        @apply relative bg-white border-b border-white z-5;
+      }
+    }
+  }
+}
+
+/*Code for Tabs*/
+.wpb-tab {
+  @apply border border-white bg-white mb-5 w-auto border-b-0;
+
+  &-content {
+    @apply p-4 border-b border-white;
+    display: none;
+
+    p {
+      @apply text-black;
+    }
+  }
+}
+
+#wpb-tab-1 {
+  @apply block;
+}
+
+/*Code for Tab Accordions*/
+.wpb-heading {
+  margin: 0;
+  font-size: 20px;
+  border-bottom: 1px solid #d4d4d1;
+
+  a {
+    padding: 10px 20px;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    position: relative;
+
+    &:after {
+      background: url(http://i61.tinypic.com/2ljgqyq_th.png) no-repeat 0 0;
+      content: '';
+      width: 46px;
+      height: 29px;
+      background-size: 46px auto;
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 30px;
+      -webkit-transition: all 0.2s ease-in-out;
+      -moz-transition: all 0.2s ease-in-out;
+      -ms-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &.wpb-current:after {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+  }
+}
+
+/*Media queries For Resposive view*/
+@media only screen and (min-width: 768px) {
+  .wpb-destophide {
+    display: none;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .wpb-mobileHide {
+    display: none;
+  }
+  .wpb-heading {
+    display: block !important;
+  }
+}

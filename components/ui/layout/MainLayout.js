@@ -1,43 +1,27 @@
 import React from 'react'
 import { MainHeader } from '../header/MainHeader'
-import { Global, css} from '@emotion/react'
 import Head from 'next/head'
+import { FooterDark } from '../footer/FooterDark'
+
 
 export const MainLayout = (props) => {
     return (
-        <>
-        <Global
-        styles={css`
-          :root{
-            --gris: #ededed;
-            --gris2: #efefef;
-            --naranja: #da55df
-          }
-          html: {
-            font-size: 62.5%,
-            box-sizing: border-box;
-          }
-          *, *:before, *:after{
-            box-sizing: inherit;
-          }
-          body:{
-            font-size: 1.6rem;
-          }
-          a{
-            text-decoration: none;            
-          }
-        `}
-        />
-        <h1>Header </h1>
+      <>        
         <Head>
           <html lang="es"/>
-          <title>Titulo </title>
+          <title>Intercorp </title>          
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png" />
+          <link rel="manifest" href="/static/img/site.webmanifest" />
+          <link rel="mask-icon" href="/static/img/safari-pinned-tab.svg" color="#005daa" />
+          <meta name="msapplication-TileColor" content="#005daa" />
+          <meta name="theme-color" content="#ffffff" />          
+          <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Work+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />          
         </Head>
-        <MainHeader/>
-        <main>
-            {props.children}
-        </main>
-        <p>Footer</p>
-        </>
+        <MainHeader/>                
+          {props.children}
+        <FooterDark/>
+      </>
     )
 }
