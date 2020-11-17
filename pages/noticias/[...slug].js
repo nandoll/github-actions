@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 import { MainLayout } from '../../components/ui/layout/MainLayout';
+// import formatDistanceFromNow from 'date-fns/formatDistanceToNow'
+import { format } from 'date-fns'
+
+import {es} from 'date-fns/locale'
 import parse from 'html-react-parser'
 
 
 function Noticia ({ post }) {
   const router = useRouter();
+  //ojo: slug[0:categoria - 1:slug - 2:id]
+  const { [0]:categoria } = router.query.slug
 
   if(router.isFallback){
     return <div>Loading...</div>
   }
 
-  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = post.items[0]
+  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta } = post.items[0]
   
   
 
@@ -21,23 +27,24 @@ function Noticia ({ post }) {
       <section className="text-gray-700 body-font">
         <div className="container px-5 py-24 mx-auto" >
           <div className="lg:full mx-auto flex flex-wrap" >
-            <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0" >
+            <div className="lg:w-1/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0" >
               Lateral
             </div>
-            <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" >
-              <h1>Categoria</h1>
-              {categoria}
-
-              <h1>Titulo:</h1>
-              {name}
-
-              <h1>Fecha:</h1>
-              {creacion}
+            <div className="lg:w-5/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" >
+              <h1 className="text-blue-500 uppercase font-semibold text-base">{ categoria }</h1>
               
-              <h1>Imagen:</h1>
-              <img src={ruta.url} alt=""/>
-              <h1>Cuerpo:</h1>
-              { cuerpo != null && parse(cuerpo) }
+
+              <h1 className="font-serif text-4xl leading-tighter my-5"> {name} </h1>
+              
+
+              <h1 className="text-gray-500 text-base font-sans uppercase">{format(new Date(creacion), "d MMM yyyy" , {locale:es})}</h1>
+              
+              <div className="my-5">
+                <img src={ruta.url} alt=""/>
+              </div>
+              <div className="text-lg">
+                { cuerpo != null && parse(cuerpo) }
+              </div>                                          
               
             </div>
           </div>          
@@ -51,7 +58,7 @@ function Noticia ({ post }) {
 // This also gets called at build time
 export async function getStaticProps({ params }) {
   // params contains the post `id`.  
-  const [,id] = params.slug  
+  const [,,id] = params.slug  
   
   
   // If the route is like /posts/1, then params.id is 1
