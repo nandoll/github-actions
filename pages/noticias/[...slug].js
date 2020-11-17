@@ -8,9 +8,29 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter(); 
   const { _id, slug } = router.query
-  
+  const handleResponse = ( info ) => {
+    const {items} = info
+    const { [0]:detalle } = items
+    const { ["post-body"]:contenidoDetalle  } = detalle
+    return contenidoDetalle
+  }
   return (
     <MainLayout>
+      <section className="text-gray-700 body-font">
+        <div className="container px-5 py-24 mx-auto" style={{border: "1px solid black"}} >
+          <div className="lg:full mx-auto flex flex-wrap" style={{border: "1px solid purple"}}>
+            <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0" style={{border: "1px solid brown"}}>
+              Lateral
+            </div>
+            <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" style={{border: "1px solid green"}}>
+              {
+                parse(handleResponse(post))
+              }
+            </div>
+          </div>          
+        </div>
+      </section>
+      
      {slug}
     </MainLayout>
   )
