@@ -12,13 +12,13 @@ import parse from 'html-react-parser'
 function Noticia ({ post }) {
   const router = useRouter();
   //ojo: slug[0:categoria - 1:slug - 2:id]
-  const { [0]:categoria } = router.query.slug
+  // const { [0]:categoria } = router.query.slug
 
   if(router.isFallback){
     return <div>Loading...</div>
   }
 
-  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta } = post.items[0]
+  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = post.items[0]
   
   
 
