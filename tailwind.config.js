@@ -38,6 +38,7 @@ module.exports = {
       },
       blue: {
         100: '#8DC3DB',
+        200: '#4d74c1',
         500: '#0039A6',
       },
       yellow: {
@@ -69,6 +70,7 @@ module.exports = {
         48: '12rem',
         56: '14rem',
         64: '16rem',
+        80: '20rem'
       },
       backgroundColor: (theme) => theme('colors'),
       borderColor: (theme) => ({

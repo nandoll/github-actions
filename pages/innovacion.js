@@ -6,6 +6,8 @@ export default function innovacion() {
   const rutaImagen = '/static/bg/bg1.png'
   const rutaImagenB = '/static/bg/bg2.png'
   const rutaImagenC = '/static/bg/bg3.png'
+  const imagen = '/static/bg/bg4.png'
+  const play = '/static/assets/play.png'
   const data = { 
     cat: "VALOR COMPARTIDO",
     title: "Alivia: tecnología al servicio de la salud de los peruanos",
@@ -26,7 +28,22 @@ export default function innovacion() {
     <FeaturedCard imagen={rutaImagen} justify="justify-start" bgColor="bg-black" data={ data }/>
     <FeaturedCard imagen={rutaImagenB} justify="justify-end" bgColor="bg-blue-500" data={ dataB }/>
     <FeaturedCard imagen={rutaImagenC} justify="justify-start" bgColor="bg-black" data={ dataC }/>
-      
+    <div className="bg-gray-700 px-20 py-16">
+      <h1 className="font-serif font-black text-4xl text-white ">Eventos</h1>
+      <div className="-mb-48">
+          <img src={'/static/assets/fest.png'} alt="Fest"/>
+      </div>
+    </div>
+    <div className="bg-gray-700">
+      <div className="bg-cover bg-top bg-no-repeat flex justify-center" style={{backgroundImage: `url(${imagen})`}}>
+        
+        <div className="h-80">
+          <img className="mb-10" src={play} alt="Play"/>    
+          <h2 className="text-center uppercase text-white text-lg">Ver programa </h2>
+        </div>
+        
+      </div>
+    </div>
     </MainLayout>
   )
 }
