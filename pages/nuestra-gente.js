@@ -32,7 +32,7 @@ export default function NuestraGente() {
   
   return (
     <MainLayout>
-      <h1>Nuestra Gente</h1>  
+      {/* <h1>Nuestra Gente</h1>   */}
       {
         loading ? 'Cargando' : 
           <ul>
