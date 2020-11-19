@@ -6,7 +6,7 @@ export default function FeaturedCard ({ imagen, justify, bgColor, data }) {
   return (
     <>
       <div className={`text-white bg-cover bg-top bg-no-repeat md:p-32 flex ${justify}`} style={{ backgroundImage: `url(${imagen})`}}> 
-        <div className={`cardWidth sm:w-1/4 md:w-2/8 md:pt-0 md:${bgColor} md:bg-opacity-50 md:rounded-md`}>
+        <div className={`cardWidth sm:w-1/4 md:w-2/5 md:pt-0 md:${bgColor} md:bg-opacity-50 md:rounded-md`}>
           <div className={`mt-48 md:mt-0 ml-10 md:ml-0	p-8 md:p-10 text-white rounded-tl-lg rounded-bl-lg md:rounded-none ${bgTitle} md:bg-opacity-0   relative`} >
             <div className="pb-3 text-sm	font-semibold uppercase" >{ cat }</div>
             <p className="pb-6 text-xl font-semibold">{ title }</p>

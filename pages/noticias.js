@@ -28,7 +28,7 @@ function Noticias({ posts, cats }){
               <h1>Tipo de árticulo</h1>
               <form onSubmit={handleChangeArticle}>
                 <label htmlFor="radNoticias"className="block uppercase cursor-pointer">
-                  <input className="mr-2" name="articulo" type="radio" id="radNoticias" />
+                  <input className="mr-2" name="articulo" checked type="radio" id="radNoticias" />
                   Noticias
                 </label>
                 <label htmlFor="radMedios"className="block uppercase cursor-pointer">
@@ -37,7 +37,7 @@ function Noticias({ posts, cats }){
                 </label>
               </form>   
 
-              <h1>Categorias</h1>   
+              <h1 className="my-3">Categorias</h1>   
               {
                 categorias.map( cat => (
                   <CategoriesLeftSidebar
@@ -50,7 +50,7 @@ function Noticias({ posts, cats }){
             <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4">
               <div className="flex">
                 <div className="w-full h-12">                  
-                { count } - {limit} de {total} 
+                1 de {total} resultados
                 </div>
               </div>
               <div className="flex flex-wrap -m-4">            
@@ -61,6 +61,7 @@ function Noticias({ posts, cats }){
                     key={ post._id }
                     post={ post }
                     cats = { categorias }
+                    bloque = {"md:w-1/3"}
                     />
                 ))
                 }
