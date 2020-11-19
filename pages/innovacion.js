@@ -1,5 +1,5 @@
 import React from 'react'
-import { FeaturedCard } from '../components/ui/card/FeaturedCard'
+import  FeaturedCard  from '../components/ui/card/FeaturedCard'
 import { MainLayout } from '../components/ui/layout/MainLayout'
 
 export default function innovacion() {
