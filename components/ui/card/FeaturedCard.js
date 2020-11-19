@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const FeaturedCard = ({ imagen, justify, bgColor, data }) => {
+export default function FeaturedCard ({ imagen, justify, bgColor, data }) {
   const {cat, title, content} = data
   return (
     <>
