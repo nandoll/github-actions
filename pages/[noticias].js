@@ -17,7 +17,9 @@ function Noticias({posts, cats, locale, locales }){
   
   const { items:noticias, count, total, limit } = posts
   const { items:categorias } = cats
+
   const [radioArticle, setRadioArticle] = useState("noticias")
+  
   const handleChangeArticle = (e) => {
     setRadioArticle(e.target.value)
     console.log(e.target.value)    

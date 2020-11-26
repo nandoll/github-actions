@@ -28,8 +28,7 @@ function Noticia ( props ) {
 
   const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = props.post.items[0]  
   
-  
-  
+  console.log(props.post.items[0] )
 
   return (
     <MainLayout>
