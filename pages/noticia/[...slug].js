@@ -17,8 +17,6 @@ function Noticia ( props ) {
   const router = useRouter();
   const { defaultLocale, isFallback, query } = router
 
-  console.log(router)
-
   //ojo: slug[0:categoria - 1:slug - 2:id]
   // const { [0]:categoria } = router.query
 
@@ -88,7 +86,7 @@ export async function getStaticProps({ params, locale, locales }) {
   // params contains the post `id`.  
   
   const [,id] = params.slug  
-  console.log(id)
+  
   // Pinta en consola node
   // console.log(params)
   // console.log(locale)
