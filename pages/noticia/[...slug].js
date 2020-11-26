@@ -1,34 +1,35 @@
 import React from 'react'
+
 import Image from 'next/image'
 import Head from 'next/head'
-
 import { useRouter } from 'next/router'
-import { MainLayout } from '../../components/ui/layout/MainLayout';
-// import formatDistanceFromNow from 'date-fns/formatDistanceToNow'
-import { format } from 'date-fns'
 
 import {es} from 'date-fns/locale'
+import { format } from 'date-fns'
+
 import parse from 'html-react-parser'
 
-
+import { MainLayout } from '../../components/ui/layout/MainLayout';
 
 function Noticia ( props ) {
-  //pinta en consola web
+
   const router = useRouter();
   const { defaultLocale, isFallback, query } = router
-
-  //ojo: slug[0:categoria - 1:slug - 2:id]
-  // const { [0]:categoria } = router.query
-
-  // console.log(categoria)
 
   if(isFallback){
     return <div>Loading...</div>
   }
 
-  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = props.post.items[0]  
   
-  console.log(props.post.items[0] )
+
+  const { 
+    name, 
+    ["created-on"]:creacion, 
+    ["post-body"]:cuerpo, 
+    ['main-image']:ruta, 
+    categoria } = props?.post.items[0]  
+  
+  // console.log(props.post.items[0] )
 
   return (
     <MainLayout>
@@ -69,74 +70,46 @@ function Noticia ( props ) {
               </div>
               <div className="text-lg">
                 { cuerpo != null && parse(cuerpo) }
-              </div>                                          
-              
+              </div>                                                        
             </div>
           </div>          
         </div>
-      </section>
-      
-     
+      </section>           
     </MainLayout>
   )
 }
-// This also gets called at build time
+
 export async function getStaticProps({ params, locale, locales }) {
-  // params contains the post `id`.  
-  
-  const [,id] = params.slug  
-  
-  // Pinta en consola node
-  // console.log(params)
-  // console.log(locale)
-  // console.log(locales)
-  
-  
-  
-  
-  
-  // If the route is like /posts/1, then params.id is 1
+
+  const [,id] = params.slug    
   const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
   const post = await res.json()
-
-  // Pass post data to the page via props
   
-  return { props: {post,locale, locales}  }
+  return { props: {
+    post,
+    locale,
+    locales
+  }}
 }
 
+export async function getStaticPaths({ locales }) {  
 
-
-export async function getStaticPaths( {params, locale, locales, post}) {  
-  
-  // Pinta en consola node
   const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
   const posts = await res.json()
-  const { items:noticias } = posts
-  
+  const { items:noticias } = posts  
   const [es, en]  = locales
 
-  
-  // console.log(es)
-  // // Get the paths we want to pre-render based on posts
-  const paths = noticias.map((post) => ({
+  const paths = noticias.map(( post ) => ({
     params: { 
       lang: es,
       slug: [post.slug],
       id: [post._id]
-    },
-    
-  })  
-  ) 
-  // console.log(JSON.stringify(paths)) 
+    }}))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  
-  return { 
+  return{ 
     fallback: true ,
     paths,
-  }    
+  }
 }
-
 
 export default Noticia

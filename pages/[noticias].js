@@ -18,7 +18,7 @@ function Noticias({posts, cats, locale, locales }){
   const { items:noticias, count, total, limit } = posts
   const { items:categorias } = cats
 
-  const [radioArticle, setRadioArticle] = useState("noticias")
+  const [radioArticle, setRadioArticle] = useState('')
   
   const handleChangeArticle = (e) => {
     setRadioArticle(e.target.value)
@@ -85,6 +85,8 @@ function Noticias({posts, cats, locale, locales }){
           </div>          
         </div>
       </section>    
+    
+    
     </MainLayout>
   )
 }
@@ -121,7 +123,7 @@ export async function getStaticProps({ locale, locales }) {
   }
 }
 
-export const getStaticPaths = ({ locales }) => {
+export function getStaticPaths ({ locales }) {
   const paths = []
 
   for (const locale of locales) {
