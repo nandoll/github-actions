@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export const CategoriesLeftSidebar = ( { cat } ) => {
   const { name, _id } = cat;  
   return (
@@ -12,6 +13,7 @@ export const CategoriesLeftSidebar = ( { cat } ) => {
           <label className="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" htmlFor={_id}>
             {name}
           </label>
+          
         </div>                
       </div>              
     

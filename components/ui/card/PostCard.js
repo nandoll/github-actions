@@ -1,10 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+
 
 import formatDistanceFromNow from 'date-fns/formatDistanceToNow'
 import {es} from 'date-fns/locale'
 
 export const PostCard = ( { post, cats, bloque} ) => {
+  const router = useRouter()
+  const { locale, locales, defaultLocale } = router
   const { featured, categoria, ['created-on']:creacion, name, pagina, ['post-summary']:extracto, slug, _id, ['main-image']:image } = post;  
   // const { name:catName, _id:catID } = cats.items;  
   
@@ -19,10 +24,17 @@ export const PostCard = ( { post, cats, bloque} ) => {
   return (
     <div className={`p-2 ${bloque}`}>
       <div className="h-full shadow-2xl border-gray-200 rounded-card overflow-hidden">
-        <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={image?.url} alt="blog"/>
+        <Image
+          src={image?.url}
+          alt="Picture of the author"
+          layout="fill"
+          objectfit="cover"
+          unsized
+          className="lg:h-48 md:h-36 w-full object-cover object-center"
+        />
         <div className="p-6">
           <h2 className="uppercase tracking-widest text-xs title-font font-medium text-gray-500 mb-1">{ formatDistanceFromNow( new Date(creacion), {locale:es})}</h2>
-          <Link href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} >              
+          <Link href={`/noticia/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} as={`/noticia/${encodeURIComponent(slug)}/${encodeURIComponent(_id)}`} >              
             <a className="title-font text-lg font-semibold text-gray-900 mb-3" style={{cursor:"pointer"}}>{ name }</a>
           </Link>
           {/* <p className="leading-relaxed mb-3">{ extracto }</p> */}
@@ -31,6 +43,6 @@ export const PostCard = ( { post, cats, bloque} ) => {
           </div>
         </div>
       </div>
-    </div>    
+    </div>
   )
 }
