@@ -11,8 +11,8 @@ import parse from 'html-react-parser'
 
 import { MainLayout } from '../../components/ui/layout/MainLayout';
 
-function Noticia ( props ) {
-
+function Noticia ( {items, locale, locales} ) {
+  
   const router = useRouter();
   const { defaultLocale, isFallback, query } = router
 
@@ -20,21 +20,12 @@ function Noticia ( props ) {
     return <div>Loading...</div>
   }
 
-  
-
-  const { 
-    name, 
-    ["created-on"]:creacion, 
-    ["post-body"]:cuerpo, 
-    ['main-image']:ruta, 
-    categoria } = props?.post.items[0]  
-  
-  // console.log(props.post.items[0] )
+  const { name, ["created-on"]:creacion, ["post-body"]:cuerpo, ['main-image']:ruta, categoria } = items
 
   return (
     <MainLayout>
       <Head>
-        <title>Noticia : {name} </title>        
+        <title>Noticia  </title>        
       </Head>
 
       <section className="text-gray-700 body-font">
@@ -46,9 +37,9 @@ function Noticia ( props ) {
             <div className="lg:w-5/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" >
             
               <p>Current slug: {query.slug}</p>
-              <p>Current locale: {props.locale}</p>
+              <p>Current locale: {locale}</p>
               <p>Default locale: {defaultLocale}</p>
-              <p>Configured locales: {JSON.stringify(props.locales)}</p>
+              <p>Configured locales: {JSON.stringify(locales)}</p>
 
               <h1 className="text-blue-500 uppercase font-semibold text-base">{ categoria }</h1>
               
@@ -81,12 +72,13 @@ function Noticia ( props ) {
 
 export async function getStaticProps({ params, locale, locales }) {
 
-  const [,id] = params.slug    
-  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
-  const post = await res.json()
+  const [,id] = params.slug;
+  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`);
+  const post = await res.json();
+  const [items] = post.items
   
   return { props: {
-    post,
+    items,
     locale,
     locales
   }}
