@@ -23,17 +23,7 @@ export const MainNavbar = () => {
           <a className="mr-5">
             En los medios
           </a>           
-        </Link>
-        <Link href="/">
-          <a className="mr-5">
-            ES
-          </a>           
-        </Link> 
-        <Link href="/en">
-          <a className="mr-5">
-            EN
-          </a>           
-        </Link> 
+        </Link>                        
        
       </nav>
     )
