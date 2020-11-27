@@ -36,10 +36,7 @@ function Noticia ( {items, locale, locales} ) {
             </div>
             <div className="lg:w-5/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4" >
             
-              <p>Current slug: {query.slug}</p>
-              <p>Current locale: {locale}</p>
-              <p>Default locale: {defaultLocale}</p>
-              <p>Configured locales: {JSON.stringify(locales)}</p>
+              
 
               <h1 className="text-blue-500 uppercase font-semibold text-base">{ categoria }</h1>
               
@@ -71,37 +68,46 @@ function Noticia ( {items, locale, locales} ) {
 }
 
 export async function getStaticProps({ params, locale, locales }) {
-
-  const [,id] = params.slug;
-  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`);
-  const post = await res.json();
-  const [items] = post.items
+  try {
+    const [,id] = params.slug;
+    const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`);
+    const post = await res.json();
+    const [items] = post.items
+    
+    return { props: {
+      items,
+      locale,
+      locales
+    }}
+  } catch (error) {
+    console.error(error)
+  }
   
-  return { props: {
-    items,
-    locale,
-    locales
-  }}
 }
 
 export async function getStaticPaths({ locales }) {  
 
-  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
-  const posts = await res.json()
-  const { items:noticias } = posts  
-  const [es, en]  = locales
+  try {
+    const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
+    const posts = await res.json()
+    const { items:noticias } = posts  
+    const [es, en]  = locales
 
-  const paths = noticias.map(( post ) => ({
-    params: { 
-      lang: es,
-      slug: [post.slug],
-      id: [post._id]
-    }}))
+    const paths = noticias.map(( post ) => ({
+      params: { 
+        lang: es,
+        slug: [post.slug],
+        id: [post._id]
+      }}))
 
-  return{ 
-    fallback: true ,
-    paths,
+    return{ 
+      fallback: true ,
+      paths,
+    }
+  } catch (error) {
+    console.error(error)
   }
+  
 }
 
 export default Noticia
