@@ -17,7 +17,7 @@ export default function BackgroundVideo(video) {
   return (
     <video
       // className={`${classNames.video}${videoClass ? " " + videoClass : ""}`}
-      className="w-full fixed top-0 -z-10"
+      className="w-full h-full"
       loop={loop}
       muted={muted}
       poster={poster}

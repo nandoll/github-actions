@@ -4,12 +4,16 @@ import Link from "next/link";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ParallaxProvider } from "react-scroll-parallax";
+
 // import backgroundVideo from "reactjs-videobg";
 
 import { MainLayout } from "../components/ui/layout/MainLayout";
 import { PostCard } from "../components/ui/card/PostCard";
 import FeaturedCard from "../components/ui/card/FeaturedCard";
 
+import video from "../components/ui/video/BackgroundVideo";
+import { ParallaxBanner } from "react-scroll-parallax";
 import BackgroundVideo from "../components/ui/video/BackgroundVideo";
 
 export default function aprendizaje({ posts, cats }) {
@@ -29,6 +33,12 @@ export default function aprendizaje({ posts, cats }) {
       "En esta edición, tuvimos un panel con Aurelia Alvarado, Gerente de Experiencia al Usuario en Innova Schools y Álvaro Valdez, Director Académico General de la UTP quienes contaron principales aprendizajes de la educación virtual.",
   };
 
+  const content = {
+    titleParallax: "Aprendizaje continuo",
+    bodyParallax:
+      "Exploramos, cuestionamos e iteramos para mejorar constantemente.",
+  };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -44,21 +54,49 @@ export default function aprendizaje({ posts, cats }) {
 
   return (
     <MainLayout>
-      <BackgroundVideo
+      <ParallaxProvider>
+        <div className=" lg:w-full lg:h-full flex flex-row md:min-h-64 items-center mb-40">
+          <ParallaxBanner
+            className="h-screen md:min-h-64"
+            layers={[
+              {
+                children: (
+                  <BackgroundVideo
+                    poster={`/static/bg/bg1.png`}
+                    onEnded={handleOnEnded}
+                    loop={true}
+                  >
+                    <source src="/static/videos/hero.mp4" type="video/mp4" />
+                  </BackgroundVideo>
+                ),
+                amount: 0.5,
+              },
+            ]}
+          ></ParallaxBanner>
+          <div className="parallaxChildren absolute lg:max-w-sm lg:ml-48">
+            <h2 className="bg-black italic text-white text-slg  pl-4 pt-2 pr-8 pb-2 inline">
+              {content.titleParallax}
+            </h2>
+            <p className=" font-serif text-3xl text-white leading-10 my-6 ">
+              {content.bodyParallax}
+            </p>
+          </div>
+        </div>
+      </ParallaxProvider>
+
+      {/* Forma #1 */}
+      {/* position:relative;overflow:hidden;width:100%;height:50vh */}
+      {/* forma 2 */}
+      {/* position:relative;overflow:hidden;width:100%;height:100vh */}
+
+      {/* <BackgroundVideo
         poster={`/static/bg/bg1.png`}
         onEnded={handleOnEnded}
         loop={true}
       >
         <source src="/static/videos/hero.mp4" type="video/mp4" />
       </BackgroundVideo>
-      <div className="h-screen">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores
-          voluptas libero quidem id voluptatibus optio fuga voluptatum pariatur
-          amet. Eaque iusto laborum a doloremque in tempora culpa exercitationem
-          autem maiores.
-        </p>
-      </div>
+      */}
 
       <FeaturedCard
         imagen={rutaImagen}
@@ -135,7 +173,6 @@ export default function aprendizaje({ posts, cats }) {
           </div>
         </div>
       </div>
-
       <div className="bg-yellow-500 px-10 py-10"></div>
     </MainLayout>
   );
