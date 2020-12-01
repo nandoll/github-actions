@@ -179,24 +179,28 @@ export default function aprendizaje({ posts, cats }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const posts = await res.json();
+  try {
+    const res = await fetch(
+      "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
+    );
+    const posts = await res.json();
 
-  const resCat = await fetch(
-    "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const cats = await resCat.json();
+    const resCat = await fetch(
+      "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
+    );
+    const cats = await resCat.json();
 
-  return {
-    props: {
-      posts,
-      cats,
-    },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
-    revalidate: 1, // In seconds
-  };
+    return {
+      props: {
+        posts,
+        cats,
+      },
+      // Next.js will attempt to re-generate the page:
+      // - When a request comes in
+      // - At most once every second
+      revalidate: 1, // In seconds
+    };
+  } catch (error) {
+    console.error();
+  }
 }

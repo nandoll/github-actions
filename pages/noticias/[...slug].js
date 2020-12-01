@@ -55,25 +55,27 @@ function Noticia({ item }) {
 export async function getStaticProps({ params }) {
   // console.log("\nparametros: " + JSON.stringify( params))
   // console.log("\nparametros tamaño: " + Object.keys(params).length)
+  try {
+    if (Object.keys(params).length) {
+      const [, id] = params.slug;
 
-  if (Object.keys(params).length) {
-    const [, id] = params.slug;
+      const res = await fetch(
+        `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
+      );
 
-    const res = await fetch(
-      `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
-    );
+      const post = await res.json();
 
-    const post = await res.json();
+      const [item] = post?.items;
 
-    const [item] = post?.items;
-
-    return {
-      props: {
-        item,
-      },
-    };
+      return {
+        props: {
+          item,
+        },
+      };
+    }
+  } catch (error) {
+    console.error();
   }
-
   return {
     props: {
       item: {
@@ -85,20 +87,24 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(
-    `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
-  );
+  try {
+    const res = await fetch(
+      `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
+    );
 
-  const posts = await res.json();
+    const posts = await res.json();
 
-  const paths = posts?.items.map(({ slug, _id }) => ({
-    params: { slug: [slug, _id] },
-  }));
+    const paths = posts?.items.map(({ slug, _id }) => ({
+      params: { slug: [slug, _id] },
+    }));
 
-  return {
-    fallback: true,
-    paths,
-  };
+    return {
+      fallback: true,
+      paths,
+    };
+  } catch (error) {
+    console.error();
+  }
 }
 
 export default Noticia;

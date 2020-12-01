@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "NODE_OPTIONS='--debug' next build",
-    "start": "next start"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "postinstall": "next build"
   },
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^11.0.0",
@@ -13,7 +14,9 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "babel-plugin-emotion": "^11.0.0",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.16.1",
+    "express": "^4.17.1",
     "html-react-parser": "^0.14.1",
     "next": "10.0.0",
     "postcss-preset-env": "^6.7.0",
