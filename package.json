@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "NODE_OPTIONS='--debug' next build",
+    "build": "next build --debug",
     "start": "next start"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "html-react-parser": "^0.14.1",
     "next": "10.0.0",
     "postcss-preset-env": "^6.7.0",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-scroll-parallax": "^2.3.5",
