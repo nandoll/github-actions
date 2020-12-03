@@ -9,7 +9,19 @@ module.exports = {
       portrait: { raw: "(orientation: portrait)" },
       landscape: { raw: "(orientation: landscape)" },
     },
+    height: {
+      "screen-1/4": "25vh",
+    },
+    backgroundPosition: {
+      bottom: "bottom",
+      center: "center",
+      left: "left",
+      right: "right",
+      top: "top",
+      "center-bottom": "center bottom",
+    },
     zIndex: {
+      "-10": "-10",
       0: 0,
       5: 5,
       10: 10,
@@ -33,12 +45,14 @@ module.exports = {
       gray: {
         100: "#F3F3F3",
         200: "#BDBDBD",
+        300: "#c4c4c4",
         500: "#727272",
         700: "#2E2E2E",
       },
       blue: {
         100: "#8DC3DB",
         200: "#4d74c1",
+        300: "#4d7bc1",
         500: "#0039A6",
       },
       yellow: {
@@ -119,6 +133,7 @@ module.exports = {
       fontFamily: {
         sans: ["Work Sans", "sans-serif"],
         serif: ["Playfair Display", "serif"],
+        icon: ["ic-font"],
       },
       fontSize: {
         cero: "0rem",
@@ -179,9 +194,6 @@ module.exports = {
       48: "12rem",
       56: "14rem",
       64: "16rem",
-    },
-    zIndex: {
-      "-10": "-10",
     },
   },
   variants: {

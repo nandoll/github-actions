@@ -1,0 +1,49 @@
+.nav {
+  &--main {
+    > a {
+      opacity: 0;
+
+      &:before {
+      }
+    }
+  }
+
+  &--langs {
+    a {
+      font-size: 20px;
+
+      &.active {
+        @apply font-bold;
+      }
+    }
+  }
+
+  &--fixed {
+    @apply bg-white;
+    transform: translateX(100%);
+    transition: -webkit-transform 0.75s cubic-bezier(0.48, 0, 0.12, 1) 0.3s;
+    transition: transform 0.75s cubic-bezier(0.48, 0, 0.12, 1) 0.3s;
+    transition: transform 0.75s cubic-bezier(0.48, 0, 0.12, 1) 0.3s,
+      -webkit-transform 0.75s cubic-bezier(0.48, 0, 0.12, 1) 0.3s;
+  }
+
+  &--top {
+    transform: translate(0px, -50px);
+    opacity: 0;
+  }
+}
+
+.burger {
+  &--main {
+    span {
+      @apply opacity-75 block;
+      height: 1px;
+      width: 30px;
+
+      &:nth-child(2),
+      &:nth-child(3) {
+        margin-top: 6px;
+      }
+    }
+  }
+}

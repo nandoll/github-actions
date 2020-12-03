@@ -1,95 +1,74 @@
 /*Code for Tab Menu*/
-.wpb-tabs-menu {
-  @apply clear-both m-0 p-0;
-  margin-bottom: -1px;
+.Tabs {
+  > ul {
+    li {
+      h4 {
+      }
 
-  &:after {
-    content: '';
-    clear: both;
-    display: table;
-  }
+      span {
+        @apply text-black;
+      }
 
-  li {
-    @apply float-left mr-3;
-    line-height: 30px;
+      i {
+        @apply border border-dashed border-gray-300 text-gray-300;
+        width: 65px;
+        height: 65px;
+      }
 
-    a {
-      @apply block relative p-3 uppercase text-white bg-white border-white border-r border-l border-b;
+      p {
+      }
 
-      &.wpb-current {
-        @apply relative bg-white border-b border-white z-5;
+      &.active {
+        &:after {
+          @apply absolute z-0 bottom-0 block bg-white w-10 h-10 transform rotate-45 rounded;
+          left: 50%;
+          margin-left: -25px;
+          margin-bottom: -15px;
+          content: "";
+        }
+
+        span,
+        i {
+          @apply text-blue-500;
+        }
+        i {
+          @apply border-blue-500;
+        }
       }
     }
   }
 }
 
-/*Code for Tabs*/
-.wpb-tab {
-  @apply border border-white bg-white mb-5 w-auto border-b-0;
+.collapse-css-transition {
+  transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  &-content {
-    @apply p-4 border-b border-white;
-    display: none;
+.Collapse {
+  &--parent {
+    @apply border-t border-white;
 
-    p {
-      @apply text-black;
+    button {
+      @apply block w-full p-2 relative text-left;
+
+      &:after {
+        @apply absolute;
+      }
     }
   }
-}
 
-#wpb-tab-1 {
-  @apply block;
-}
+  &--child {
+    @apply bg-gray-700 mb-2 text-center text-sm;
 
-/*Code for Tab Accordions*/
-.wpb-heading {
-  margin: 0;
-  font-size: 20px;
-  border-bottom: 1px solid #d4d4d1;
-
-  a {
-    padding: 10px 20px;
-    display: block;
-    text-decoration: none;
-    color: #000;
-    position: relative;
-
-    &:after {
-      background: url(http://i61.tinypic.com/2ljgqyq_th.png) no-repeat 0 0;
-      content: '';
-      width: 46px;
-      height: 29px;
-      background-size: 46px auto;
-      display: block;
-      position: absolute;
-      top: 10px;
-      right: 30px;
-      -webkit-transition: all 0.2s ease-in-out;
-      -moz-transition: all 0.2s ease-in-out;
-      -ms-transition: all 0.2s ease-in-out;
-      transition: all 0.2s ease-in-out;
+    button {
+      @apply;
     }
 
-    &.wpb-current:after {
-      -webkit-transform: rotate(180deg);
-      -moz-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      transform: rotate(180deg);
-    }
-  }
-}
+    .content {
+      @apply p-5;
 
-/*Media queries For Resposive view*/
-@media only screen and (min-width: 768px) {
-  .wpb-destophide {
-    display: none;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .wpb-mobileHide {
-    display: none;
-  }
-  .wpb-heading {
-    display: block !important;
+      a {
+        @apply text-gray-300 underline inline-block mb-1;
+      }
+    }
   }
 }
