@@ -38,7 +38,7 @@ export default function Home() {
         </div>
         <div className="w-full lg:w-5/6 acciones">
           <div className="pb-5 lg:pb-8">
-            <Carrusel />
+            <Carrusel seccion="noticias" />
           </div>
         </div>
       </SectionFullScreen>

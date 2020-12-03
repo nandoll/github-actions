@@ -94,7 +94,7 @@ export default class Carrusel extends Component {
             className="inline-block rounded-xl border border-dashed border-blue-500 text-blue-500 px-5 py-2 leading-none"
             href="#"
           >
-            Ver más noticias
+            Ver más {this.props.seccion}
           </a>
         </div>
       </div>
