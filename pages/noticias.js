@@ -1,23 +1,13 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
+
 import { PostCard } from "../components/ui/card/PostCard";
 import { MainLayout } from "../components/ui/layout/MainLayout";
 import { CategoriesLeftSidebar } from "../components/ui/sidebar/CategoriesLeftSidebar";
+import { RadioMediosLeftSidebar } from "../components/ui/sidebar/RadioMediosLeftSidebar";
 
 function Noticias({ posts, cats }) {
-  const router = useRouter();
-
   const { items: noticias, count, total, limit } = posts;
   const { items: categorias } = cats;
-
-  const [radioArticle, setRadioArticle] = useState("noticias");
-
-  const handleChangeArticle = (e) => {
-    setRadioArticle(e.target.value);
-
-    console.log(e.target.value);
-    router.push(`/${e.target.value}`);
-  };
 
   return (
     <MainLayout>
@@ -26,49 +16,22 @@ function Noticias({ posts, cats }) {
           <div className="lg:full mx-auto flex flex-wrap">
             {/* Sidebar */}
             <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-              <h1>Tipo de árticulo</h1>
-              <form onSubmit={handleChangeArticle}>
-                <label
-                  htmlFor="radNoticias"
-                  className="block uppercase cursor-pointer"
-                >
-                  <input
-                    className="mr-2"
-                    name="articulo"
-                    checked
-                    type="radio"
-                    id="radNoticias"
-                    value="noticias"
-                    checked={radioArticle === "noticias"}
-                    onChange={handleChangeArticle}
-                  />
-                  Noticias
-                </label>
-                <label
-                  htmlFor="radMedios"
-                  className="block uppercase cursor-pointer"
-                >
-                  <input
-                    className="mr-2"
-                    name="articulo"
-                    type="radio"
-                    id="radMedios"
-                    value="en-los-medios"
-                    checked={radioArticle === "en-los-medios"}
-                    onChange={handleChangeArticle}
-                  />
-                  En los medios
-                </label>
-              </form>
-
-              <h1 className="my-3">Categorias</h1>
+              <RadioMediosLeftSidebar radioName="noticias" />
+              <div className="flex">
+                <p className="mt-2 w-1/2 flex md:hidden flex-col">
+                  <div className=" flex">1 de {total} resultados</div>
+                </p>
+                <h3 className="mt-2 w-1/2 md:mt-8 text-blue-500 text-sm md:text-lg mb-4 text-right md:text-left">
+                  Categorias
+                </h3>
+              </div>
               {categorias.map((cat) => (
                 <CategoriesLeftSidebar key={cat._id} cat={cat} />
               ))}
             </div>
             {/* Panel Cards */}
             <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4">
-              <div className="flex">
+              <div className="hidden md:flex">
                 <div className="w-full h-12">1 de {total} resultados</div>
               </div>
               <div className="flex flex-wrap -m-4">

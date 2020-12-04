@@ -1,29 +1,14 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
+
 import { MainLayout } from "../components/ui/layout/MainLayout";
 import { CategoriesLeftSidebar } from "../components/ui/sidebar/CategoriesLeftSidebar";
 import { PostCardExterno } from "../components/ui/card/PostCardExterno";
+import { RadioMediosLeftSidebar } from "../components/ui/sidebar/RadioMediosLeftSidebar";
 
 const EnLosMedios = ({ posts, cats }) => {
-  const router = useRouter();
-
   const { items: noticias, count, total, limit } = posts;
   const { items: categorias } = cats;
 
-  const [radioArticle, setRadioArticle] = useState("en-los-medios");
-
-  const handleMedios = (noticias) => {
-    return noticias.filter((post) => post.featured && console.log(post));
-  };
-
-  handleMedios(noticias);
-
-  const handleChangeArticle = (e) => {
-    setRadioArticle(e.target.value);
-
-    console.log(e.target.value);
-    router.push(`/${e.target.value}`);
-  };
   return (
     <MainLayout>
       <section className="text-gray-700 body-font">
@@ -31,42 +16,10 @@ const EnLosMedios = ({ posts, cats }) => {
           <div className="lg:full mx-auto flex flex-wrap">
             {/* Sidebar */}
             <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-              <h1>Tipo de árticulo</h1>
-              <form onSubmit={handleChangeArticle}>
-                <label
-                  htmlFor="radNoticias"
-                  className="block uppercase cursor-pointer"
-                >
-                  <input
-                    className="mr-2"
-                    name="articulo"
-                    checked
-                    type="radio"
-                    id="radNoticias"
-                    value="noticias"
-                    checked={radioArticle === "noticias"}
-                    onChange={handleChangeArticle}
-                  />
-                  Noticias
-                </label>
-                <label
-                  htmlFor="radMedios"
-                  className="block uppercase cursor-pointer"
-                >
-                  <input
-                    className="mr-2"
-                    name="articulo"
-                    type="radio"
-                    id="radMedios"
-                    value="en-los-medios"
-                    checked={radioArticle === "en-los-medios"}
-                    onChange={handleChangeArticle}
-                  />
-                  En los medios
-                </label>
-              </form>
-
-              <h1 className="my-3">Categorias</h1>
+              <RadioMediosLeftSidebar radioName="en-los-medios" />
+              <h3 className=" mt-8 text-blue-500 text-sm md:text-lg mb-6 ">
+                Categorias
+              </h3>
               {categorias.map((cat) => (
                 <CategoriesLeftSidebar key={cat._id} cat={cat} />
               ))}
