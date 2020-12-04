@@ -26,39 +26,49 @@ export const PostCard = ({ post, cats, bloque }) => {
   };
   return (
     <div className={`p-2 ${bloque}`}>
-      <div className="h-full shadow-2xl border-gray-200 rounded-card overflow-hidden">
-        <img
-          className="lg:h-48 md:h-36 w-full object-cover object-center"
-          src={image?.url}
-          alt="blog"
-        />
-        <div className="p-6">
-          <h2 className="uppercase tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
-            {formatDistanceFromNow(new Date(creacion), { locale: es })}
-          </h2>
-          <Link
-            href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
-              _id
-            )}`}
-            as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
-              _id
-            )}`}
+      {/* Card Paolo */}
+      <article className="h-full overflow-hidden rounded mx-0 shadow-lg">
+        <figure className="relative">
+          <img
+            src={image?.url}
+            alt="Imagen demo"
+            className="lg:h-40 md:h-36 w-full object-cover object-center"
+          />
+          <a className="block absolute inset-0 z-5" href="#"></a>
+        </figure>
+        <div className="px-4 pt-3 pb-4">
+          <time
+            className="text-xxs text-gray-500 mb-2 inline-block leading-none"
+            dateTime="2020-09-02"
           >
-            <a
-              className="title-font text-lg font-semibold text-gray-900 mb-3"
-              style={{ cursor: "pointer" }}
+            {formatDistanceFromNow(new Date(creacion), { locale: es })}
+          </time>
+          <div className="min-h-24">
+            <Link
+              href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
+                _id
+              )}`}
+              as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
+                _id
+              )}`}
             >
-              {name}
-            </a>
-          </Link>
-          {/* <p className="leading-relaxed mb-3">{ extracto }</p> */}
-          <div className="flex items-center flex-wrap ">
-            <h2 className="uppercase tracking-widest text-xs title-font font-semibold my-5 text-blue-500">
-              {handleNameCategory(categoria)}
-            </h2>
+              <a
+                title={name}
+                className="inline-block leading-none text-lg font-bold text-black"
+              >
+                {name}
+              </a>
+            </Link>
           </div>
+          <a
+            className="font-semibold uppercase text-blue-500 text-xs half-dashed"
+            href="#"
+            title="Categoría Acciones"
+          >
+            {handleNameCategory(categoria)}
+          </a>
         </div>
-      </div>
+      </article>
     </div>
   );
 };

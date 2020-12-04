@@ -18,9 +18,9 @@ function Noticias({ posts, cats }) {
             <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
               <RadioMediosLeftSidebar radioName="noticias" />
               <div className="flex">
-                <p className="mt-2 w-1/2 flex md:hidden flex-col">
+                <div className="mt-2 w-1/2 flex md:hidden flex-col">
                   <div className=" flex">1 de {total} resultados</div>
-                </p>
+                </div>
                 <h3 className="mt-2 w-1/2 md:mt-8 text-blue-500 text-sm md:text-lg mb-4 text-right md:text-left">
                   Categorias
                 </h3>
@@ -43,6 +43,22 @@ function Noticias({ posts, cats }) {
                     bloque={"md:w-1/3"}
                   />
                 ))}
+              </div>
+              {/* Contador/paginador */}
+              <div className="w-full mt-20 text-center md:text-right ">
+                <a className="inline-block rounded-card border border-dashed border-blue-500 text-blue-500 px-5 py-2 leading-none text-center">
+                  <i className="inline-block  icon-arrow-left"></i>
+                </a>
+                <a className="inline-block mx-2  bg-gray-700 text-white leading-none text-sm font-semibold rounded-card px-5 py-3">
+                  1
+                </a>
+                <a className="inline-block mr-2 border-blue-500  border   text-blue-500 text-sm font-semibold leading-none rounded-card py-2 px-3">
+                  2
+                </a>
+
+                <a className="inline-block rounded-card border border-dashed border-blue-500 text-blue-500 px-5 py-2 leading-none text-center">
+                  <i className="inline-block  icon-arrow-right"></i>
+                </a>
               </div>
             </div>
           </div>
