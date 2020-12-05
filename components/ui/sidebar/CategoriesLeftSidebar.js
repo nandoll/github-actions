@@ -1,8 +1,6 @@
 import React from "react";
 
-export const CategoriesLeftSidebar = ({ cat }) => {
-  const { name, _id } = cat;
-
+export const CategoriesLeftSidebar = ({ cat, catID }) => {
   const handleClickCheck = (e) => {
     console.log(e.target.value);
   };
@@ -12,18 +10,18 @@ export const CategoriesLeftSidebar = ({ cat }) => {
         <input
           className="mr-1"
           name="chkCategoria"
-          value={name}
+          value={cat}
           type="checkbox"
-          id={_id}
+          id={catID}
           onChange={handleClickCheck}
         />
       </div>
       <div className="md:w-7/8">
         <label
           className="block text-gray-500 mb-1 md:mb-0 pl-2 cursor-pointer"
-          htmlFor={_id}
+          htmlFor={catID}
         >
-          {name}
+          {cat}
         </label>
       </div>
     </div>

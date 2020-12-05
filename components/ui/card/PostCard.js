@@ -5,32 +5,22 @@ import formatDistanceFromNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 
 export const PostCard = ({ post, cats, bloque }) => {
-  const {
-    featured,
-    categoria,
-    ["created-on"]: creacion,
-    name,
-    pagina,
-    ["post-summary"]: extracto,
-    slug,
-    _id,
-    ["main-image"]: image,
-  } = post;
+  const { titulo, slug, link_imagen_preview, fecha_hora_creacion } = post;
   // const { name:catName, _id:catID } = cats.items;
 
-  const handleNameCategory = (id) => {
-    const resultado = cats.filter((nombre, indice) => nombre._id === id);
-    const { [0]: categoria } = resultado;
-    const { name } = categoria;
-    return name;
-  };
+  // const handleNameCategory = (id) => {
+  //   const resultado = cats.filter((nombre, indice) => nombre._id === id);
+  //   const { [0]: categoria } = resultado;
+  //   const { name } = categoria;
+  //   return name;
+  // };
   return (
     <div className={`p-2 ${bloque}`}>
       {/* Card Paolo */}
       <article className="h-full overflow-hidden rounded mx-0 shadow-lg">
         <figure className="relative">
           <img
-            src={image?.url}
+            src={link_imagen_preview}
             alt="Imagen demo"
             className="lg:h-40 md:h-36 w-full object-cover object-center"
           />
@@ -41,22 +31,20 @@ export const PostCard = ({ post, cats, bloque }) => {
             className="text-xxs text-gray-500 mb-2 inline-block leading-none"
             dateTime="2020-09-02"
           >
-            {formatDistanceFromNow(new Date(creacion), { locale: es })}
+            {formatDistanceFromNow(new Date(fecha_hora_creacion), {
+              locale: es,
+            })}
           </time>
           <div className="min-h-24">
             <Link
-              href={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
-                _id
-              )}`}
-              as={`/noticias/${encodeURIComponent(slug)}/${encodeURIComponent(
-                _id
-              )}`}
+              href={`/noticias/${encodeURIComponent(slug)}`}
+              as={`/noticias/${encodeURIComponent(slug)}`}
             >
               <a
-                title={name}
+                title={titulo}
                 className="inline-block leading-none text-lg font-bold text-black"
               >
-                {name}
+                {titulo}
               </a>
             </Link>
           </div>
@@ -65,7 +53,7 @@ export const PostCard = ({ post, cats, bloque }) => {
             href="#"
             title="Categoría Acciones"
           >
-            {handleNameCategory(categoria)}
+            {cats}
           </a>
         </div>
       </article>
