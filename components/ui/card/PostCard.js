@@ -4,8 +4,14 @@ import Link from "next/link";
 import formatDistanceFromNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 
-export const PostCard = ({ post, cats, bloque }) => {
-  const { titulo, slug, link_imagen_preview, fecha_hora_creacion } = post;
+export const PostCard = ({ post, bloque }) => {
+  const {
+    titulo,
+    slug,
+    link_imagen_preview,
+    fecha_hora_creacion,
+    id_categoria,
+  } = post;
   // const { name:catName, _id:catID } = cats.items;
 
   // const handleNameCategory = (id) => {
@@ -53,7 +59,7 @@ export const PostCard = ({ post, cats, bloque }) => {
             href="#"
             title="Categoría Acciones"
           >
-            {cats}
+            {id_categoria}
           </a>
         </div>
       </article>

@@ -25,7 +25,7 @@ function Noticias({ data, cats }) {
               </div>
               {cats?.map((cat) => (
                 <CategoriesLeftSidebar
-                  key={cat.id}
+                  key={cat?.id}
                   cat={cat?.nombre}
                   catID={cat?.id}
                 />
@@ -40,12 +40,7 @@ function Noticias({ data, cats }) {
               </div>
               <div className="flex flex-wrap -m-4">
                 {data?.map((post) => (
-                  <PostCard
-                    key={post.id}
-                    post={post}
-                    catID={post?.id_categoria}
-                    bloque={"md:w-1/3"}
-                  />
+                  <PostCard key={post?.id} post={post} bloque={"md:w-1/3"} />
                 ))}
               </div>
               {/* Contador/paginador */}
@@ -72,87 +67,12 @@ function Noticias({ data, cats }) {
   );
 }
 
-export async function getStaticProps() {
-  // API NOTICIAS
-  // const myHeaders = new Headers();
-  // myHeaders.append("Content-Type", "application/json");
-  // const requestOptions = {
-  //   method: "POST",
-  //   headers: myHeaders,
-  //   body: raw,
-  // };
-  // const requestHomeOptions = {
-  //   method: "POST",
-  //   headers: myHeaders,
-  // };
-  // const requestNoticiasPorSeccionOptions = {
-  //   method: "POST",
-  //   headers: myHeaders,
-  //   body: JSON.stringify({
-  //     id_idioma: 1,
-  //     seccion: 1, //la pagina id
-  //     destacado: 1,
-  //   }),
-  // };
-  // const requestDetalleNoticiaOptions = {
-  //   method: "POST",
-  //   headers: myHeaders,
-  //   body: JSON.stringify({
-  //     slug: "noticia-nro-1",
-  //     id_noticia: 1,
-  //     id_idioma: 1,
-  //   }),
-  // };
-  // const requestObtenerCategoriasOptions = {
-  //   method: "GET",
-  //   headers: myHeaders,
-  // };
-  // const requestInformacionFinancieraOptions = {
-  //   method: "GET",
-  //   headers: myHeaders,
-  // };
-
-  // // #1
-  // const apiNoticias = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/obtener-noticias",
-  //   requestOptions
-  // );
-  // // #2
-  // const apiNoticiasHome = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/obtener-noticias-home",
-  //   requestHomeOptions
-  // );
-  // // #3
-  // const apiNoticiasPorSeccion = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/noticias-por-seccion",
-  //   requestNoticiasPorSeccionOptions
-  // );
-  // // #4
-
-  // const apiDetalleNoticia = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/detalle-noticia",
-  //   requestDetalleNoticiaOptions
-  // );
-
-  // // #5
-
-  // const apiObtenerCategorias = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/obtener-categorias",
-  //   requestObtenerCategoriasOptions
-  // );
-  // // 6
-
-  // const apiInformacionFinanciera = await fetch(
-  //   "https://modobetaintercorp.azurewebsites.net/api/obtener-informacion-financiera",
-  //   requestInformacionFinancieraOptions
-  // );
-  // const noticia = await apiInformacionFinanciera.json();
-  // console.log("\nApi informacion-financiera: ");
-  // console.log(noticia);
+export async function getStaticProps(context) {
+  const idioma = context?.locale === "en" ? 1 : 0;
 
   const raw = {
-    id_idioma: 1,
-    tipo_articulo: "M",
+    id_idioma: idioma,
+    tipo_articulo: "N",
     categorias: [],
     pagina: 1,
     cantidad: 10,
@@ -160,17 +80,6 @@ export async function getStaticProps() {
 
   const data = await getAllNews(raw);
   const cats = await getAllCats();
-
-  // const res = await fetch(
-  //   "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  // );
-
-  // const posts = await res.json();
-
-  // const resCat = await fetch(
-  //   "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  // );
-  // const cats = await resCat.json();
 
   return {
     props: {

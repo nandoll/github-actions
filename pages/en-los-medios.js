@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
 
 import { MainLayout } from "../components/ui/layout/MainLayout";
 import { CategoriesLeftSidebar } from "../components/ui/sidebar/CategoriesLeftSidebar";
 import { PostCardExterno } from "../components/ui/card/PostCardExterno";
 import { RadioMediosLeftSidebar } from "../components/ui/sidebar/RadioMediosLeftSidebar";
+import { getAllCats, getAllNews } from "../lib/api";
 
-const EnLosMedios = ({ posts, cats }) => {
-  const { items: noticias, count, total, limit } = posts;
-  const { items: categorias } = cats;
+Modal.setAppElement("body");
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+const EnLosMedios = ({ data, cats }) => {
+  let subtitle;
+
+  const [openModal, setOpenModal] = useState(false);
+  const [externalLink, setexternalLink] = useState("");
+
+  const handleOpenModal = (link) => {
+    setOpenModal(true);
+    setexternalLink(link);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleRequestExternalLink = (e) => {
+    console.log(e.target);
+    window.open(externalLink);
+    setOpenModal(false);
+  };
+
+  const handleAfterOpenModal = () => {
+    subtitle.style.color = "#f00";
+  };
 
   return (
     <MainLayout>
@@ -17,55 +52,86 @@ const EnLosMedios = ({ posts, cats }) => {
             {/* Sidebar */}
             <div className="lg:w-1/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
               <RadioMediosLeftSidebar radioName="en-los-medios" />
-              <h3 className=" mt-8 text-blue-500 text-sm md:text-lg mb-6 ">
-                Categorias
-              </h3>
-              {categorias.map((cat) => (
-                <CategoriesLeftSidebar key={cat._id} cat={cat} />
+              <div className="flex">
+                <div className="mt-2 w-1/2 flex md:hidden flex-col">
+                  <div className=" flex">1 de {data?.length} resultados</div>
+                </div>
+                <h3 className="mt-2 w-1/2 md:mt-8 text-blue-500 text-sm md:text-lg mb-4 text-right md:text-left">
+                  Categorias
+                </h3>
+              </div>
+              {cats?.map((cat) => (
+                <CategoriesLeftSidebar
+                  key={cat?.id}
+                  cat={cat?.nombre}
+                  catID={cat?.id}
+                />
               ))}
             </div>
             {/* Panel Cards */}
             <div className="lg:w-3/4 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 -mt-4">
               <div className="flex">
-                <div className="w-full h-12">1 de {total} resultados</div>
+                <div className="w-full h-12">1 resultados</div>
               </div>
               <div className="flex flex-wrap -m-4">
-                {noticias.map(
-                  (post) =>
-                    post.featured && (
-                      <PostCardExterno
-                        key={post._id}
-                        post={post}
-                        cats={categorias}
-                        bloque={"md:w-1/3"}
-                      />
-                    )
-                )}
+                {data?.map((post) => (
+                  <PostCardExterno
+                    key={post?.id}
+                    post={post}
+                    catID={post?.id_categoria}
+                    bloque={"md:w-1/3"}
+                    handleOpenModal={handleOpenModal}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <Modal
+        isOpen={openModal}
+        onAfterOpen={handleAfterOpenModal}
+        onRequestClose={handleCloseModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+        <button onClick={handleCloseModal}>Seguir en intercorp</button>
+        <button onClick={handleRequestExternalLink}>Sí</button>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </Modal>
     </MainLayout>
   );
 };
 
-export async function getStaticProps() {
-  const res = await fetch(
-    "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const posts = await res.json();
+export async function getStaticProps(context) {
+  const idioma = context?.locale === "en" ? 1 : 0;
 
-  const resCat = await fetch(
-    "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const cats = await resCat.json();
+  const raw = {
+    id_idioma: idioma,
+    tipo_articulo: "M",
+    categorias: [],
+    pagina: 1,
+    cantidad: 10,
+  };
+
+  const data = await getAllNews(raw);
+  const cats = await getAllCats();
 
   return {
     props: {
-      posts,
+      data,
       cats,
     },
+
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
     // - At most once every second

@@ -1,11 +1,36 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { MainLayout } from "../../components/ui/layout/MainLayout";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import parse from "html-react-parser";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { PostCard } from "../../components/ui/card/PostCard";
 
-import { getAllNews, getNewsDetail } from "../../lib/api";
+function Noticia({ item, posts, cats }) {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
-function Noticia({ data }) {
   return (
     <MainLayout>
       <section className="text-gray-700 body-font">
@@ -42,12 +67,10 @@ function Noticia({ data }) {
                 Reconocimientos
               </h1>
               <h1 className="font-serif text-4xl leading-snug my-5 text-black">
-                {data?.titulo}
+                {item?.name}
               </h1>
               <time className="flex my-8 text-gray-500 text-base font-sans uppercase ">
-                {format(new Date(data?.fecha_hora_creacion), "d MMM yyyy", {
-                  locale: es,
-                })}
+                {format(new Date(Date.now()), "d MMM yyyy", { locale: es })}
               </time>
               <div className="my-5">
                 {/* <img src={ item["main-image"].url } alt=""/> */}
@@ -60,13 +83,13 @@ function Noticia({ data }) {
                 veniam omnis natus, totam asperiores ea voluptatem at alias
                 minima, nihil qui!{" "}
               </p>
-              <div className="text-lg my-8">{data.texto}</div>
+              <div className="text-lg my-8">{parse(item["post-body"])}</div>
 
               {/* carrusel */}
               <h2 className="my-8 text-blue-500 font-serif font-black text-xl lg:text-2xl leading-none">
                 Acciones de impacto
               </h2>
-              {/* <Slider {...settings}>
+              <Slider {...settings}>
                 {posts.items.map((post) => (
                   <PostCard
                     key={post._id}
@@ -75,7 +98,7 @@ function Noticia({ data }) {
                     bloque=""
                   />
                 ))}
-              </Slider> */}
+              </Slider>
             </div>
           </div>
         </div>
@@ -85,39 +108,63 @@ function Noticia({ data }) {
 }
 
 export async function getStaticProps({ params }) {
-  const [slug] = params.slug;
+  // console.log("\nparametros: " + JSON.stringify( params))
+  // console.log("\nparametros tamaño: " + Object.keys(params).length)
 
-  const raw = {
-    slug: slug,
-    id_noticia: 0,
-    id_idioma: 0,
-  };
+  if (Object.keys(params).length) {
+    const resPost = await fetch(
+      "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
+    );
+    const posts = await resPost.json();
 
-  console.log(raw);
-  const data = await getNewsDetail(raw);
-  console.log(data);
+    const resCat = await fetch(
+      "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
+    );
+    const cats = await resCat.json();
+
+    const [, id] = params.slug;
+
+    const res = await fetch(
+      `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
+    );
+
+    const post = await res.json();
+
+    const [item] = post?.items;
+
+    return {
+      props: {
+        item,
+        posts,
+        cats,
+      },
+    };
+  }
+
   return {
     props: {
-      data,
+      item: {
+        name: "",
+        categoria: "",
+      },
     },
   };
 }
 
 export async function getStaticPaths() {
-  const raw = {
-    id_idioma: 1,
-    tipo_articulo: "N",
-    categorias: [],
-  };
-  const allPosts = await getAllNews(raw);
+  const res = await fetch(
+    `https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`
+  );
 
-  const paths = allPosts?.map(({ slug }) => ({
-    params: { slug: [slug] },
+  const posts = await res.json();
+
+  const paths = posts?.items.map(({ slug, _id }) => ({
+    params: { slug: [slug, _id] },
   }));
 
   return {
-    paths: paths,
     fallback: true,
+    paths,
   };
 }
 
