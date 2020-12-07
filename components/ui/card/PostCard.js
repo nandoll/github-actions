@@ -41,9 +41,13 @@ export const PostCard = ({ post, bloque }) => {
               locale: es,
             })}
           </time>
+
           <div className="min-h-24">
             <Link
-              href={`/noticias/${encodeURIComponent(slug)}`}
+              href={{
+                pathname: `/noticias/${encodeURIComponent(slug)}`,
+                query: { cat: encodeURIComponent(id_categoria) },
+              }}
               as={`/noticias/${encodeURIComponent(slug)}`}
             >
               <a

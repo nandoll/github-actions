@@ -1,11 +1,48 @@
 import React from "react";
-import { MainLayout } from "../../components/ui/layout/MainLayout";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
+import { MainLayout } from "../../components/ui/layout/MainLayout";
 import { getAllNews, getNewsDetail } from "../../lib/api";
+import { Shared } from "../../components/ui/social/Shared";
+import { PostCard } from "../../components/ui/card/PostCard";
 
-function Noticia({ data }) {
+function Noticia({ data, posts }) {
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const handleFilterPost = () => {
+    return posts?.filter(
+      (post) =>
+        post?.id_categoria === data?.id_categoria &&
+        post?.id !== data?.id &&
+        post
+    );
+  };
+
+  const handleShowSlider = () => {
+    const show = handleFilterPost();
+    return show?.length > 0 ? true : false;
+  };
+
   return (
     <MainLayout>
       <section className="text-gray-700 body-font">
@@ -18,22 +55,7 @@ function Noticia({ data }) {
               >
                 <i className="inline-block  icon-arrow-left"></i>
               </a>
-
-              <div className="grid justify-items-start py-4 my-4 min-h-64 ">
-                <a className="flex h-10 w-10 items-center justify-center border rounded-full border-gray-500 text-gray-700 px-5 py-2 leading-none">
-                  <i className="inline-block  icon-linkedin"></i>
-                </a>
-                <a className="flex h-10 w-10 items-center justify-center border rounded-full border-gray-500 text-gray-700 px-5 py-2 leading-none">
-                  <i className="inline-block icon-twitter"></i>
-                </a>
-                <a className="flex h-10 w-10 items-center justify-center border rounded-full border-gray-500 text-gray-700 px-5 py-2 leading-none">
-                  <i className="inline-block icon-facebook"></i>
-                </a>
-                <a className="flex h-10 w-10 items-center justify-center border rounded-full border-gray-500 text-gray-700 px-5 py-2 leading-none">
-                  <i className="inline-block icon-copy"></i>
-                </a>
-              </div>
-
+              <Shared title={data?.titulo} />
               {/*  icon-facebook */}
               {/* <p>Redes sociales</p> */}
             </div>
@@ -63,19 +85,23 @@ function Noticia({ data }) {
               <div className="text-lg my-8">{data.texto}</div>
 
               {/* carrusel */}
-              <h2 className="my-8 text-blue-500 font-serif font-black text-xl lg:text-2xl leading-none">
-                Acciones de impacto
-              </h2>
-              {/* <Slider {...settings}>
-                {posts.items.map((post) => (
-                  <PostCard
-                    key={post._id}
-                    post={post}
-                    cats={cats.items}
-                    bloque=""
-                  />
-                ))}
-              </Slider> */}
+
+              {handleShowSlider() ? (
+                <h2 className="my-8 text-blue-500 font-serif font-black text-xl lg:text-2xl leading-none">
+                  Noticias similares
+                </h2>
+              ) : (
+                ""
+              )}
+              <Slider {...settings}>
+                {posts?.map(
+                  (post) =>
+                    post?.id_categoria === data?.id_categoria &&
+                    post?.id !== data?.id && (
+                      <PostCard key={post.id} post={post} bloque="" />
+                    )
+                )}
+              </Slider>
             </div>
           </div>
         </div>
@@ -84,26 +110,36 @@ function Noticia({ data }) {
   );
 }
 
-export async function getStaticProps({ params }) {
-  const [slug] = params.slug;
-
+export async function getStaticProps(context) {
+  const idioma = context?.locale === "en" ? 1 : 0;
+  const [slug] = context?.params.slug;
+  // console.log(context);
   const raw = {
     slug: slug,
     id_noticia: 0,
     id_idioma: 0,
   };
+  const rawPost = {
+    id_idioma: idioma,
+    tipo_articulo: "N",
+    categorias: [],
+    pagina: 1,
+    cantidad: 10,
+  };
 
-  console.log(raw);
   const data = await getNewsDetail(raw);
-  console.log(data);
+  // TODO : Modificar para by Cat
+  const posts = await getAllNews(rawPost);
+
   return {
     props: {
       data,
+      posts,
     },
   };
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({}) {
   const raw = {
     id_idioma: 1,
     tipo_articulo: "N",
