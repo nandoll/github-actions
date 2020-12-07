@@ -109,11 +109,11 @@ export default function aprendizaje({ posts, cats }) {
           {" "}
           Conoce más{" "}
         </h1>
-        <Slider {...settings}>
+        {/* <Slider {...settings}>
           {noticias.map((post) => (
             <PostCard key={post._id} post={post} cats={categorias} bloque="" />
           ))}
-        </Slider>
+        </Slider> */}
         <Link href="/noticias">
           <a className="inline-block border border-dotted rounded-full mx-10 mb-20 py-2 px-10 border-blue-500 text-blue-500">
             Ver más noticias

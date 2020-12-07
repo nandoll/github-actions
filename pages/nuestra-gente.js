@@ -81,10 +81,10 @@ export default function NuestraGente() {
                 que se siente muy ligado hacian un objetivo común”.
               </p>
 
-              <div class="md:flex">
-                <div class="md:flex-shrink-0 p-8">
+              <div className="md:flex">
+                <div className="md:flex-shrink-0 p-8">
                   <img
-                    class="h-16  w-full object-cover md:w-16"
+                    className="h-16  w-full object-cover md:w-16"
                     src="/static/img/comentarios/bruno.png"
                     alt="Bruno logistica"
                   />
@@ -93,7 +93,7 @@ export default function NuestraGente() {
                   <p className="tracking-wide text-sm text-indigo-500 font-semibold ">
                     Bruno
                   </p>
-                  <p classname="block mt-1 font-light ">
+                  <p className="block mt-1 font-light ">
                     Logística, Intercorp Retail
                   </p>
                 </div>

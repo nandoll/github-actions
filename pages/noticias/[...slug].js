@@ -66,11 +66,7 @@ function Noticia({ data, posts }) {
               <h1 className="font-serif text-4xl leading-snug my-5 text-black">
                 {data?.titulo}
               </h1>
-              <time className="flex my-8 text-gray-500 text-base font-sans uppercase ">
-                {format(new Date(data?.fecha_hora_creacion), "d MMM yyyy", {
-                  locale: es,
-                })}
-              </time>
+
               <div className="my-5">
                 {/* <img src={ item["main-image"].url } alt=""/> */}
                 <img src="/static/bg/bg2.png" alt="" />
@@ -82,7 +78,7 @@ function Noticia({ data, posts }) {
                 veniam omnis natus, totam asperiores ea voluptatem at alias
                 minima, nihil qui!{" "}
               </p>
-              <div className="text-lg my-8">{data.texto}</div>
+              <div className="text-lg my-8">{data?.texto}</div>
 
               {/* carrusel */}
 
@@ -112,7 +108,7 @@ function Noticia({ data, posts }) {
 
 export async function getStaticProps(context) {
   const idioma = context?.locale === "en" ? 1 : 0;
-  const [slug] = context?.params.slug;
+  const [slug] = context?.params.slug || "";
   // console.log(context);
   const raw = {
     slug: slug,
