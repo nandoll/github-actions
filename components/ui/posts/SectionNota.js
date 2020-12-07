@@ -1,5 +1,6 @@
 import React from "react";
 import { LinkCats } from "../formats/LinkCats";
+import Link from "next/link";
 
 export const SectionNota = (props) => {
   const { img, category, title, link } = props;
@@ -20,12 +21,11 @@ export const SectionNota = (props) => {
               {title}
             </h3>
 
-            <a
-              className="bg-black text-white text-lg leading-none rounded-xl px-5 py-2"
-              href={link}
-            >
-              Ir <i className="icon-arrow-right"></i>
-            </a>
+            <Link href={link}>
+              <a className="bg-black text-white text-lg leading-none rounded-xl px-5 py-2">
+                Ir <i className="icon-arrow-right"></i>
+              </a>
+            </Link>
           </div>
         </div>
       </article>

@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 import { MainLayout } from "../components/ui/layout/MainLayout";
 import { VideoBg } from "../components/ui/video/VideoBg";
 import { SectionFullScreen } from "../components/ui/layout/SectionFullScreen";
-import Carrusel from "../components/ui/carousels/SlickCarousel";
+import SlickCarousel from "../components/ui/carousels/SlickCarousel";
 import CarruselFade from "../components/ui/carousels/SlickCarouselFade";
 import BgBlack from "../components/ui/backgrounds/BgBlack";
 import HeroHome from "../components/ui/header/HeroHome";
@@ -11,8 +13,9 @@ import CollageEmployees from "../components/ui/sections/CollageEmployees";
 import { NuestrasPlataformas } from "../components/ui/sections/NuestrasPlataformas";
 import { SectionNota } from "../components/ui/posts/SectionNota";
 import { BgNota } from "../components/ui/posts/BgNota";
+import { getHomeNews } from "../lib/api";
 
-export default function Home() {
+function Home({ data }) {
   return (
     <MainLayout navType="home">
       <section className="fixed inset-0 z-0 video--hero" id="cnt-video-hero">
@@ -38,7 +41,7 @@ export default function Home() {
         </div>
         <div className="w-full lg:w-5/6 acciones">
           <div className="pb-5 lg:pb-8">
-            <Carrusel seccion="noticias" />
+            <SlickCarousel data={data} seccion="noticias" ruta={"/noticias"} />
           </div>
         </div>
       </SectionFullScreen>
@@ -141,13 +144,12 @@ export default function Home() {
                 <i className="text-white text-lg icon-play"></i>
               </span>
             </a>
-            <a
-              className="absolute bottom-0 mx-auto mb-20 inline-block rounded-xl border border-blue-500 bg-blue-500 text-white text-lg px-8 py-2 leading-snug"
-              href="#"
-            >
-              Conocer más de nuestra gente{" "}
-              <i className="inline-block ml-2 icon-arrow-right"></i>
-            </a>
+            <Link href="/nuestra-gente">
+              <a className="absolute bottom-0 mx-auto mb-20 inline-block rounded-xl border border-blue-500 bg-blue-500 text-white text-lg px-8 py-2 leading-snug">
+                Conocer más de nuestra gente{" "}
+                <i className="inline-block ml-2 icon-arrow-right"></i>
+              </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -161,7 +163,7 @@ export default function Home() {
           category="Innovación de impacto"
           title="Nos incrustamos en la vida de las familias peruanas para
               comprender sus aspiraciones y necesidades."
-          link="#"
+          link="/innovacion"
         />
       </section>
 
@@ -169,8 +171,31 @@ export default function Home() {
         bg="static/img/estudiantes.jpg"
         title="Aprendemos día a día para ofrecer siempre mejores servicios para los peruanos."
         category="Aprendizaje continuo"
-        link="#"
+        link="/aprendizaje"
       />
     </MainLayout>
   );
 }
+
+export async function getStaticProps(context) {
+  const idioma = context?.locale === "en" ? 1 : 0;
+
+  const raw = {
+    id_idioma: idioma,
+  };
+
+  const data = await getHomeNews(raw);
+  console.log(data);
+  return {
+    props: {
+      data,
+    },
+
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every second
+    revalidate: 1, // In seconds
+  };
+}
+
+export default Home;

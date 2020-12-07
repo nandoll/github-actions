@@ -11,6 +11,7 @@ export const PostCard = ({ post, bloque }) => {
     link_imagen_preview,
     fecha_hora_creacion,
     id_categoria,
+    categoria,
   } = post;
   // const { name:catName, _id:catID } = cats.items;
 
@@ -61,9 +62,9 @@ export const PostCard = ({ post, bloque }) => {
           <a
             className="font-semibold uppercase text-blue-500 text-xs half-dashed"
             href="#"
-            title="Categoría Acciones"
+            title={categoria?.nombre}
           >
-            {id_categoria}
+            {categoria?.nombre}
           </a>
         </div>
       </article>

@@ -15,11 +15,9 @@ import FeaturedCard from "../components/ui/card/FeaturedCard";
 import video from "../components/ui/video/BackgroundVideo";
 import { ParallaxBanner } from "react-scroll-parallax";
 import BackgroundVideo from "../components/ui/video/BackgroundVideo";
+import { getNewsBySection } from "../lib/api";
 
-export default function aprendizaje({ posts, cats }) {
-  const { items: noticias, count, total, limit } = posts;
-  const { items: categorias } = cats;
-
+export default function aprendizaje({ news }) {
   const rutaImagen = "/static/bg/bg6.png";
   const rutaImagenB = "/static/bg/bg2.png";
   const rutaImagenC = "/static/bg/bg3.png";
@@ -109,11 +107,11 @@ export default function aprendizaje({ posts, cats }) {
           {" "}
           Conoce más{" "}
         </h1>
-        {/* <Slider {...settings}>
-          {noticias.map((post) => (
-            <PostCard key={post._id} post={post} cats={categorias} bloque="" />
+        <Slider {...settings}>
+          {news?.map((post) => (
+            <PostCard key={post?.id} post={post} bloque="" />
           ))}
-        </Slider> */}
+        </Slider>
         <Link href="/noticias">
           <a className="inline-block border border-dotted rounded-full mx-10 mb-20 py-2 px-10 border-blue-500 text-blue-500">
             Ver más noticias
@@ -179,20 +177,16 @@ export default function aprendizaje({ posts, cats }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?limit=9&offset=0&api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const posts = await res.json();
-
-  const resCat = await fetch(
-    "https://api.webflow.com/collections/5fabfcf448583971dcbcc5c4/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee"
-  );
-  const cats = await resCat.json();
+  const raw = {
+    id_idioma: 1,
+    seccion: 1,
+    destacado: 1,
+  };
+  const news = await getNewsBySection(raw);
 
   return {
     props: {
-      posts,
-      cats,
+      news,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

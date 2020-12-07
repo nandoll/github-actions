@@ -11,6 +11,7 @@ export const PostCardExterno = ({ post, catID, bloque, handleOpenModal }) => {
     link_imagen_preview,
     fecha_hora_creacion,
     link_noticia_medio,
+    categoria,
   } = post;
   // const {
   //   ["enlace-hacia-medio"]: linkExterno,
@@ -60,7 +61,7 @@ export const PostCardExterno = ({ post, catID, bloque, handleOpenModal }) => {
           {/* <p className="leading-relaxed mb-3">{ extracto }</p> */}
           <div className="flex items-center flex-wrap ">
             <h2 className="uppercase tracking-widest text-xs title-font font-semibold my-5 text-blue-500">
-              {catID}
+              {categoria?.nombre}
             </h2>
           </div>
         </div>

@@ -61,7 +61,7 @@ function Noticia({ data, posts }) {
             </div>
             <div className="lg:w-5/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 mt-10 md:pl-40">
               <h1 className="text-blue-500 uppercase font-semibold text-base half-dashed">
-                Reconocimientos
+                {data?.categoria?.nombre}
               </h1>
               <h1 className="font-serif text-4xl leading-snug my-5 text-black">
                 {data?.titulo}
