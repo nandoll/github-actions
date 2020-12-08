@@ -78,8 +78,9 @@ export async function getStaticProps(context) {
     cantidad: 10,
   };
 
-  const data = await getAllNews(raw);
-  const cats = await getAllCats();
+  const data = (await getAllNews(raw)) || [];
+  console.log(data);
+  const cats = (await getAllCats()) || [];
 
   return {
     props: {
