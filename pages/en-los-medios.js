@@ -112,8 +112,6 @@ export async function getStaticProps(context) {
     id_idioma: idioma,
     tipo_articulo: "M",
     categorias: [],
-    pagina: 1,
-    cantidad: 10,
   };
 
   const data = await getAllNews(raw);
