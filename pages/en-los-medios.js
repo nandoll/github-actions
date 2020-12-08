@@ -94,7 +94,7 @@ const EnLosMedios = ({ data, cats }) => {
         onAfterOpen={handleAfterOpenModal}
         onRequestClose={handleCloseModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Ejemplo Modal"
       >
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={handleCloseModal}>Seguir en intercorp</button>
