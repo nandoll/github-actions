@@ -99,14 +99,7 @@ const EnLosMedios = ({ data, cats }) => {
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={handleCloseModal}>Seguir en intercorp</button>
         <button onClick={handleRequestExternalLink}>Sí</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
+        <div>Alerta</div>
       </Modal>
     </MainLayout>
   );
