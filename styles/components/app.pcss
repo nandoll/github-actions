@@ -1,0 +1,143 @@
+.section {
+  &--home {
+    &__main {
+      h1 {
+        span {
+          transform: scale(0, 1);
+        }
+      }
+    }
+  }
+}
+
+.half-dashed {
+  @apply inline-block leading-none;
+
+  &:after {
+    @apply w-6 border-b border-dashed border-gray-200 block pt-2;
+    content: "";
+  }
+}
+
+.colaboradores {
+  figure {
+    figcaption {
+      @apply opacity-0;
+      transition: opacity 0.3s ease-in-out;
+      background-color: rgba(0, 93, 170, 0.65);
+
+      &:hover {
+        @apply opacity-100;
+      }
+    }
+  }
+}
+
+.play {
+  &--animated {
+    i {
+      letter-spacing: -9px;
+    }
+  }
+}
+
+.bg {
+  &--overlay {
+    @apply relative;
+
+    &:after {
+      @apply block absolute inset-0 bg-black opacity-75 z-0;
+      content: "";
+    }
+  }
+}
+
+.list {
+  &--proposito {
+    section {
+      &:nth-child(odd) {
+        @media screen and (--tablets-up) {
+          .container {
+            @apply justify-end;
+          }
+        }
+
+        article {
+          @apply bg-blue-500;
+        }
+      }
+
+      &:nth-child(even) {
+        @media screen and (--tablets-up) {
+          .container {
+            @apply justify-start;
+          }
+        }
+
+        article {
+          @apply bg-gray-700;
+        }
+      }
+
+      @media screen and (--only-tablets) {
+        .container {
+          @apply justify-center;
+        }
+      }
+
+      @media screen and (--only-phones) {
+        &:nth-child(odd) {
+          article {
+            header {
+              @apply rounded-tr rounded-br bg-blue-500;
+            }
+          }
+        }
+
+        &:nth-child(even) {
+          article {
+            header {
+              @apply rounded-tl rounded-bl bg-gray-700 right-0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Borrar */
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  pointer-events: none;
+  max-width: 100%;
+}
+
+.App-header {
+  background-color: #262626;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-section {
+  max-width: calc(80% - 50px);
+  margin: 0 auto 100px auto;
+  padding: 50px;
+  background-color: #fff;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+}

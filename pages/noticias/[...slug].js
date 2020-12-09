@@ -1,57 +1,165 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { MainLayout } from '../../components/ui/layout/MainLayout';
-import parse from 'html-react-parser'
+import React from "react";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
-function Noticia ({ post }) {
-  const router = useRouter(); 
-  const { _id, slug } = router.query
-  const ite = post
-  console.log(ite)
-  
-  useEffect(() => {
-    slug && ''
-  }, [slug])
-  
+import { MainLayout } from "../../components/ui/layout/MainLayout";
+import { getAllNews, getNewsDetail } from "../../lib/api";
+import { Shared } from "../../components/ui/social/Shared";
+import { PostCard } from "../../components/ui/card/PostCard";
+
+function Noticia({ data, posts }) {
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const handleFilterPost = () => {
+    return posts?.filter(
+      (post) =>
+        post?.id_categoria === data?.id_categoria &&
+        post?.id !== data?.id &&
+        post
+    );
+  };
+
+  const handleShowSlider = () => {
+    const show = handleFilterPost();
+    return show?.length > 0 ? true : false;
+  };
+
   return (
     <MainLayout>
-      <h1>Noticias Detalle :  { slug } - {_id}</h1>
-      {/* { parse(richText) } */}
+      <section className="text-gray-700 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="lg:w-full mx-auto flex flex-wrap">
+            <div className="hidden md:flex md:fixed lg:w-1/6 w-auto lg:pr-10 mb-6 lg:mb-0  flex-col top-100 ">
+              <a
+                className=" text-blue-500 h-10 w-10 p-2 leading-none text-left"
+                onClick={() => window.history.back()}
+              >
+                <i className="inline-block  icon-arrow-left"></i>
+              </a>
+              <Shared title={data?.titulo} />
+              {/*  icon-facebook */}
+              {/* <p>Redes sociales</p> */}
+            </div>
+            <div className="lg:w-5/6 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0 mt-10 md:pl-40">
+              <h1 className="text-blue-500 uppercase font-semibold text-base half-dashed">
+                {data?.categoria?.nombre}
+              </h1>
+              <h1 className="font-serif text-4xl leading-snug my-5 text-black">
+                {data?.titulo}
+              </h1>
+
+              <div className="my-5">
+                {/* <img src={ item["main-image"].url } alt=""/> */}
+                <img src="/static/bg/bg2.png" alt="" />
+              </div>
+              <p className="font-serif text-2xl font-normal text-black">
+                {" "}
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa,
+                vitae? Obcaecati officiis odio ullam nemo dolore officia optio,
+                veniam omnis natus, totam asperiores ea voluptatem at alias
+                minima, nihil qui!{" "}
+              </p>
+              <div className="text-lg my-8">{data?.texto}</div>
+
+              {/* carrusel */}
+
+              {handleShowSlider() ? (
+                <h2 className="my-8 text-blue-500 font-serif font-black text-xl lg:text-2xl leading-none">
+                  Noticias similares
+                </h2>
+              ) : (
+                ""
+              )}
+              <Slider {...settings}>
+                {posts?.map(
+                  (post) =>
+                    post?.id_categoria === data?.id_categoria &&
+                    post?.id !== data?.id && (
+                      <PostCard key={post.id} post={post} bloque="" />
+                    )
+                )}
+              </Slider>
+            </div>
+          </div>
+        </div>
+      </section>
     </MainLayout>
-  )
+  );
 }
 
+export async function getStaticProps(context) {
+  console.log(context);
+  try {
+    const idioma = context?.locale === "en" ? 1 : 0;
+    const [slug] = context?.params.slug || "";
+    // console.log(context);
+    const raw = {
+      slug: slug,
+      id_noticia: 0,
+      id_idioma: 0,
+    };
+    const rawPost = {
+      id_idioma: idioma,
+      tipo_articulo: "N",
+      categorias: [],
+      pagina: 1,
+      cantidad: 10,
+    };
 
-export async function getStaticPaths() {  
-  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
-  const posts = await res.json()
-  const { items:noticias } = posts
+    const data = await getNewsDetail(raw);
+    // TODO : Modificar para by Cat
+    const posts = await getAllNews(rawPost);
 
-  // Get the paths we want to pre-render based on posts
-  const paths = noticias.map((post) => ({
-    params: { slug: [post.slug], id: post._id },         
-  }))
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: true }
-  
-  
+    return {
+      props: {
+        data,
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-// This also gets called at build time
-export async function getStaticProps({ params }) {
-  // params contains the post `id`.  
-  const [,id] = params.slug  
-  
-  // If the route is like /posts/1, then params.id is 1
-  const res = await fetch(`https://api.webflow.com/collections/5fa2c45087b41f0f9b713464/items/${id}?api_version=1.0.0&access_token=ed2770ed568f942e403fab9300fa760b97eadc3ea3bb5901e025deb8cd4cb3ee`)
-  const post = await res.json()
+export async function getStaticPaths({}) {
+  try {
+    const raw = {
+      id_idioma: 1,
+      tipo_articulo: "N",
+      categorias: [],
+    };
+    const allPosts = await getAllNews(raw);
 
-  // Pass post data to the page via props
-  return { props: { post } }
+    const paths = allPosts?.map(({ slug }) => ({
+      params: { slug: [slug] },
+    }));
+
+    return {
+      paths: paths,
+      fallback: true,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-
-export default Noticia
+export default Noticia;

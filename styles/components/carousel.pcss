@@ -1,0 +1,77 @@
+.comunidad {
+  &--number {
+    font-size: 180px;
+
+    @media screen and (--only-phones) {
+      font-size: 80px;
+    }
+  }
+
+  &--nav {
+    li {
+      @apply bg-gray-300;
+      width: 12px;
+      height: 12px;
+
+      &.tns-nav-active {
+        @apply bg-gray-500;
+      }
+
+      @media screen and (--only-phones) {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  &__sm {
+    .grid {
+      > div {
+        a {
+          &:after {
+            @apply w-8 h-8 absolute right-0 bottom-0 font-icon text-white text-xl text-center flex flex-col justify-center items-center;
+            content: "\2b";
+            background-color: rgba(0, 93, 170, 0.5);
+          }
+        }
+
+        &:before {
+          @apply block;
+          padding-top: 100%;
+          content: "";
+        }
+      }
+    }
+  }
+}
+
+.acciones {
+  .tns-ovh {
+    @media screen and (--tablets-up) {
+      @apply px-3;
+    }
+  }
+}
+
+/*=============================================
+=               Slick Carousel               =
+=============================================*/
+.slick {
+  &--dost {
+    &__sm {
+      .slick-dots {
+        top: 125%;
+
+        li {
+          button {
+            &:before {
+              @apply text-sm;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*=====  End of Slick Carousel  ======*/

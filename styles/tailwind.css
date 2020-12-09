@@ -1,0 +1,27 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+@import "./components/mediaqueries.pcss";
+
+@import "./components/fonts.pcss";
+
+@import "./components/globals.pcss";
+
+@import "./components/navs.pcss";
+
+@import "./components/forms.pcss";
+
+@import "./components/videos.pcss";
+
+@import "./components/carousel.pcss";
+
+@import "./components/popups.pcss";
+
+@import "./components/tabs-accordeon.pcss";
+
+@import "./components/backgrounds.pcss";
+
+@import "./components/app.pcss";

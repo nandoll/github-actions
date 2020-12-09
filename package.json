@@ -1,22 +1,53 @@
 {
-  "name": "nextjs",
-  "version": "0.1.0",
+  "name": "intercorp-merge",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^11.0.0",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
+    "@kunukn/react-collapse": "^2.2.9",
+    "autoprefixer": "^9.0.0",
     "babel-plugin-emotion": "^11.0.0",
+    "babel-plugin-macros": "^2.8.0",
+    "cross-env": "^7.0.3",
+    "date-fns": "^2.16.1",
+    "express": "^4.17.1",
+    "gsap": "^3.5.1",
     "html-react-parser": "^0.14.1",
     "next": "10.0.0",
+    "postcss": "^8.1.8",
+    "postcss-cli": "^8.3.0",
+    "postcss-extend": "^1.0.5",
+    "postcss-import": "^13.0.0",
+    "postcss-nested": "^5.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-modal": "^3.12.1",
+    "react-responsive-modal": "^6.0.0",
+    "react-scroll-parallax": "^2.3.5",
+    "react-share": "^4.3.1",
+    "react-slick": "^0.27.13",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.2.1",
+    "tailwind.macro": "^1.0.0-alpha.10",
+    "tailwindcss": "^1.9.6",
     "webflow-api": "^0.5.0"
+  },
+  "devDependencies": {
+    "@zeit/next-css": "^1.0.1"
+  },
+  "babelMacros": {
+    "twin": {
+      "config": "tailwind.config.js"
+    }
   }
 }

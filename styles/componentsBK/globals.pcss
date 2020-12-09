@@ -1,0 +1,17 @@
+* {
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+html {
+  font-size: 20px;
+
+  @media screen and (--only-phones) {
+    font-size: 18px;
+  }
+}
+
+body {
+  @apply font-sans font-regular leading-tight text-gray-500;
+}
