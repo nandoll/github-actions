@@ -177,20 +177,24 @@ export default function aprendizaje({ news }) {
 }
 
 export async function getStaticProps() {
-  const raw = {
-    id_idioma: 1,
-    seccion: 1,
-    destacado: 1,
-  };
-  const news = await getNewsBySection(raw);
+  try {
+    const raw = {
+      id_idioma: 1,
+      seccion: 1,
+      destacado: 1,
+    };
+    const news = await getNewsBySection(raw);
 
-  return {
-    props: {
-      news,
-    },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
-    revalidate: 1, // In seconds
-  };
+    return {
+      props: {
+        news,
+      },
+      // Next.js will attempt to re-generate the page:
+      // - When a request comes in
+      // - At most once every second
+      revalidate: 1, // In seconds
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }

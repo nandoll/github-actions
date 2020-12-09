@@ -106,28 +106,32 @@ const EnLosMedios = ({ data, cats }) => {
 };
 
 export async function getStaticProps(context) {
-  const idioma = context?.locale === "en" ? 1 : 0;
+  try {
+    const idioma = context?.locale === "en" ? 1 : 0;
 
-  const raw = {
-    id_idioma: idioma,
-    tipo_articulo: "M",
-    categorias: [],
-  };
+    const raw = {
+      id_idioma: idioma,
+      tipo_articulo: "M",
+      categorias: [],
+    };
 
-  const data = await getAllNews(raw);
-  const cats = await getAllCats();
+    const data = await getAllNews(raw);
+    const cats = await getAllCats();
 
-  return {
-    props: {
-      data,
-      cats,
-    },
+    return {
+      props: {
+        data,
+        cats,
+      },
 
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
-    revalidate: 1, // In seconds
-  };
+      // Next.js will attempt to re-generate the page:
+      // - When a request comes in
+      // - At most once every second
+      revalidate: 1, // In seconds
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default EnLosMedios;

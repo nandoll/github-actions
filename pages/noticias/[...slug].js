@@ -107,50 +107,59 @@ function Noticia({ data, posts }) {
 }
 
 export async function getStaticProps(context) {
-  const idioma = context?.locale === "en" ? 1 : 0;
-  const [slug] = context?.params.slug || "";
-  // console.log(context);
-  const raw = {
-    slug: slug,
-    id_noticia: 0,
-    id_idioma: 0,
-  };
-  const rawPost = {
-    id_idioma: idioma,
-    tipo_articulo: "N",
-    categorias: [],
-    pagina: 1,
-    cantidad: 10,
-  };
+  console.log(context);
+  try {
+    const idioma = context?.locale === "en" ? 1 : 0;
+    const [slug] = context?.params.slug || "";
+    // console.log(context);
+    const raw = {
+      slug: slug,
+      id_noticia: 0,
+      id_idioma: 0,
+    };
+    const rawPost = {
+      id_idioma: idioma,
+      tipo_articulo: "N",
+      categorias: [],
+      pagina: 1,
+      cantidad: 10,
+    };
 
-  const data = await getNewsDetail(raw);
-  // TODO : Modificar para by Cat
-  const posts = await getAllNews(rawPost);
+    const data = await getNewsDetail(raw);
+    // TODO : Modificar para by Cat
+    const posts = await getAllNews(rawPost);
 
-  return {
-    props: {
-      data,
-      posts,
-    },
-  };
+    return {
+      props: {
+        data,
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function getStaticPaths({}) {
-  const raw = {
-    id_idioma: 1,
-    tipo_articulo: "N",
-    categorias: [],
-  };
-  const allPosts = await getAllNews(raw);
+  try {
+    const raw = {
+      id_idioma: 1,
+      tipo_articulo: "N",
+      categorias: [],
+    };
+    const allPosts = await getAllNews(raw);
 
-  const paths = allPosts?.map(({ slug }) => ({
-    params: { slug: [slug] },
-  }));
+    const paths = allPosts?.map(({ slug }) => ({
+      params: { slug: [slug] },
+    }));
 
-  return {
-    paths: paths,
-    fallback: true,
-  };
+    return {
+      paths: paths,
+      fallback: true,
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default Noticia;

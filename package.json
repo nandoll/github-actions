@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:css": "postcss styles/tailwind.css -o styles/index.css",
-    "watch:css": "postcss styles/tailwind.css -o styles/index.css",
-    "dev": "npm run watch:css && NODE_OPTIONS='--inspect' next dev",
-    "build": "next build --debug",
-    "start": "next start"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^11.0.0",
@@ -18,7 +16,9 @@
     "autoprefixer": "^9.0.0",
     "babel-plugin-emotion": "^11.0.0",
     "babel-plugin-macros": "^2.8.0",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.16.1",
+    "express": "^4.17.1",
     "gsap": "^3.5.1",
     "html-react-parser": "^0.14.1",
     "next": "10.0.0",
