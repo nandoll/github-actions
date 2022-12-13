@@ -16,7 +16,7 @@
     "babel-plugin-emotion": "^11.0.0",
     "cross-env": "^7.0.2",
     "date-fns": "^2.16.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "html-react-parser": "^0.14.1",
     "next": "10.0.0",
     "postcss-preset-env": "^6.7.0",
